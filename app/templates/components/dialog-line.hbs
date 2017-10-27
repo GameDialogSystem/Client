@@ -1,0 +1,66 @@
+<flow-input-container>
+  {{#each model.inputs as |input|}}
+    {{flow-input
+        parent=model
+        model=input
+        acceptRerouting=(action "acceptRerouting")
+        cancelReroute=(action "cancelReroute")}}
+  {{/each}}
+</flow-input-container>
+
+<flow-content>
+{{textarea value=(mut model.message) cols="80" rows="6"}}
+</flow-content>
+
+<flow-output-container>
+  {{#each model.outputs as |output|}}
+    {{flow-output
+        parent=model
+        model=output
+        reroute=(action "reroute")
+        cancelReroute=(action "cancelReroute")}}
+  {{/each}}
+</flow-output-container>
+
+
+{{!--
+{{#paper-card as |card|}}
+  {{#unless isStartingLine}}
+  <div class="gs-connection-container">
+    <div class="gs-answer-circle"><div></div></div>
+  </div>
+  {{/unless}}
+
+  {{#card.content}}
+    <p>
+      {{model.message}}
+    </p>
+  {{/card.content}}
+  <!--
+  {{textarea value=(mut model.message) cols="80" rows="6"}}
+-->
+  {{#paper-list}}
+    {{#each model.answers as |answer|}}
+      {{#paper-item as |controls|}}
+        <p>{{answer.response}}</p>
+
+        <div class="md-secondary-container">
+          {{#controls.button secondary=true iconButton=true onClick=(action "changeAnswer" answer)}}
+            {{paper-icon "edit"}}
+          {{/controls.button}}
+          {{#controls.button secondary=true iconButton=true onClick=(action "deleteAnswer" answer)}}
+            {{paper-icon "delete"}}
+          {{/controls.button}}
+        </div>
+
+      {{/paper-item}}
+    {{/each}}
+  {{/paper-list}}
+{{/paper-card}}
+
+<div class="gs-answer-container">
+  {{#each model.answers as |answer|}}
+    {{dialog-connector-endpoint connectionReroute=(action 'onConnectionReroute' x y)}}
+  {{/each}}
+</div>
+--}}

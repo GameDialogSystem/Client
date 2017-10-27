@@ -7,6 +7,9 @@ const Router = Ember.Router.extend({
 });
 
 Router.map(function() {
+  this.route('about');
+  this.route('contact');
+  this.route('dialogs', { path: '/dialogs/:dialog_id' });
 });
 
 export default Router;

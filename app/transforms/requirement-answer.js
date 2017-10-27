@@ -1,0 +1,11 @@
+import DS from 'ember-data';
+
+export default DS.Transform.extend({
+  deserialize(serialized) {
+    return serialized.requirement + '.' +serialized.value;
+  },
+
+  serialize(deserialized) {
+    return deserialized.split('.');
+  }
+});
