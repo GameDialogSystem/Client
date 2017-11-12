@@ -1,8 +1,38 @@
-import Ember from 'ember';
-import MovableMixin from '../mixins/movable';
 import FlowElement from 'flow-logic/components/flow-element';
 
 export default FlowElement.extend({
+  isExtended: true,
+  displayedRows: 3,
+
+  _height: 0,
+
+  autoresizeEnabled : true,
+
+
+  didInsertElement() {
+    this._super(...arguments);
+  },
+
+  actions: {
+
+    /**
+     * Is triggered each time an output pin was rerouted, not connected to an
+     * existing input pin and the action wasn't cancelled. Use this function
+     * to add new blocks to the model.
+     *
+     * @param {Output} output - the outgoing pin where the action was initialized
+     * @param {Point} point - the position where the mouse button was released and
+     * the new block should be inserted
+     */
+    connectToNewBlock: function(output, point){
+      let connectToNewBlock = this.get('connectToNewBlock');
+      if(connectToNewBlock !== null || connectToNewBlock !== undefined){
+        connectToNewBlock(output, point);
+      }
+    },
+  },
+
+
   //tagName: 'gs-item-movable',
 
 /*

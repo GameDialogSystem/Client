@@ -1,99 +1,14 @@
-
-
-
+{{paper-appbar title=model.name}}
 
 <div class="gs-side-container">
-  <div>
-    {{#paper-toolbar}}
-      {{#paper-toolbar-tools}}
-      {{#paper-button iconButton=true onClick=(action "rerouteToIndex")}}
-        {{paper-icon "arrow-back"}}
-      {{/paper-button}}
-        <h2>
-          {{model.name}}
-        </h2>
-        <span class="flex"></span>
-      {{/paper-toolbar-tools}}
-    {{/paper-toolbar}}
-  </div>
+
   <div>
 
     {{!-- The container to show the dialog lines --}}
-    {{#flow-container model=model onAddNewElement=(action 'addNewElement') as |container|}}
-
-      {{#each model.blocks as |block|}}
-        {{#dialog-line
-          model=block
-          reroute=(action 'reroute')
-          cancelReroute=(action 'cancelReroute')
-          as |element|
-        }}
-          {{element.input-container inputs=block.inputs}}
-          {{element.output-container outputs=block.outputs}}
-        {{/dialog-line}}
-      {{/each}}
-    {{/flow-container}}
+    {{flow-container
+      blocks=model.lines
+      deleteBlock=(action 'deleteBlock')
+      connectToNewBlock=(action 'createNewDialogLine')}}
     {{!-- The container to show the dialog lines --}}
-
-
-
-
-
-{{!--
-    {{dialog-line
-      isStartingLine=true
-      x=50
-      y=10
-      model=(mut model.startingLine)
-      onConnectionReroute=(action 'connectionReroute')
-      onAddAnswer=(action 'addAnswer')
-      onChangeAnswer=(action 'showOptionsForAnswer')
-      onDeleteAnswer=(action 'deleteAnswer')
-      onChange=(action 'updateDialogLine')
-    }}
-
-    <svg width="1680px" height="1000px" viewBox="0 0 1680 1000" xmlns="http://www.w3.org/2000/svg" version="1.1">
-      {{#each model.startingLine.answers as |answer index|}}
-         {{#if answer.nextDialogLine}}
-         {{log model.startingLine}}
-           {{dialog-connector start=model.startingLine end=answer.nextDialogLine index=index}}
-         {{/if}}
-       {{/each}}
-    </svg>
-
-    {{#each model.startingLine.answers as |answer index|}}
-      {{#if answer.nextDialogLine}}
-        {{dialog-line
-          x=(index-to-position index model.startingLine.answers.length)
-          y=40
-          model=(mut answer.nextDialogLine)
-          onAddAnswer=(action 'addAnswer')
-          onChangeAnswer=(action 'showOptionsForAnswer')
-          onDeleteAnswer=(action 'deleteAnswer')
-          onChange=(action 'updateDialogLine')
-          onConnectionChange=(action 'connectionReroute')
-        }}
-      {{/if}}
-    {{/each}}
-    --}}
   </div>
 </div>
-
-
-{{#liquid-if isShowingOptions class="gs-options-container"}}
-  <div class="gs-options">
-    {{#paper-toolbar}}
-      {{#paper-toolbar-tools}}
-        <h2>
-          {{model.name}}
-        </h2>
-        <span class="flex"></span>
-        {{#paper-button iconButton=true onClick=(action "closeChangeAnswer")}}
-          {{paper-icon "close"}}
-        {{/paper-button}}
-      {{/paper-toolbar-tools}}
-    {{/paper-toolbar}}
-
-    {{dialog-answer answer=answerToBeEdited onInternalChangeAnswer=(action 'changeAnswer' answerToBeEdited)}}
-  </div>
-{{/liquid-if}}

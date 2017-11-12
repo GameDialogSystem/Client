@@ -17,12 +17,7 @@ export default Ember.Controller.extend({
 
       let store = this.get('store');
 
-      // create new dialog
-      let line = store.createRecord('dialog-line', {
-        message: 'Cute Game',
-      });
-
-      this.get('store').push({
+      store.push({
         data: [{
           id: 0,
           type: 'dialog-line',
@@ -32,7 +27,7 @@ export default Ember.Controller.extend({
         }]
       });
 
-      this.get('store').push({
+      store.push({
         data: [{
           id: 1,
           type: 'dialog',
@@ -53,7 +48,6 @@ export default Ember.Controller.extend({
     },
 
     showAbout(){
-      console.log("showAbout")
       this.transitionToRoute("about");
     }
   }

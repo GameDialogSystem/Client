@@ -1,0 +1,194 @@
+<md-appbar-tabbar>
+  {{paper-icon "cloud_queue" size=24}}
+  {{#paper-tabs
+    center=center
+    stretch=stretch
+    borderBottom=borderBottom
+    selected=selectedTab
+    onChange=(action (mut selectedTab)) as |tabs|}}
+    {{#tabs.tab value="foo"}}
+      Page One
+    {{/tabs.tab}}
+    {{#tabs.tab value="bar"}}
+      Page Two
+    {{/tabs.tab}}
+    {{#tabs.tab value="blub"}}
+      Page Three
+    {{/tabs.tab}}
+    {{#tabs.tab value="planet"}}
+      Page Three
+    {{/tabs.tab}}
+    {{#tabs.tab value="coaster"}}
+      Page Three
+    {{/tabs.tab}}
+  {{/paper-tabs}}
+</md-appbar-tabbar>
+
+{{#liquid-bind (hash tab=selectedTab) class="md-padding" as |current|}}
+  {{#if (eq current.tab "foo") }}
+    {{#paper-toolbar-tools}}
+      {{#paper-button iconButton=true}}
+        {{paper-icon "menu"}}
+      {{/paper-button}}
+      {{#paper-button iconButton=true}}
+        {{paper-icon "menu"}}
+      {{/paper-button}}
+      {{#paper-button iconButton=true}}
+        {{paper-icon "menu"}}
+      {{/paper-button}}
+      {{#paper-button iconButton=true}}
+        {{paper-icon "menu"}}
+      {{/paper-button}}
+      {{#paper-button iconButton=true}}
+        {{paper-icon "menu"}}
+      {{/paper-button}}
+      {{#paper-button iconButton=true}}
+        {{paper-icon "menu"}}
+      {{/paper-button}}
+      {{#paper-button iconButton=true}}
+        {{paper-icon "menu"}}
+      {{/paper-button}}
+      {{#paper-button iconButton=true}}
+        {{paper-icon "menu"}}
+      {{/paper-button}}
+      {{#paper-button iconButton=true}}
+        {{paper-icon "menu"}}
+      {{/paper-button}}
+      {{#paper-button iconButton=true}}
+        {{paper-icon "menu"}}
+      {{/paper-button}}
+    {{/paper-toolbar-tools}}
+  {{else if (eq current.tab "bar")}}
+  {{#paper-toolbar-tools}}
+    {{#paper-button iconButton=true}}
+      {{paper-icon "menu"}}
+    {{/paper-button}}
+    {{#paper-button iconButton=true}}
+      {{paper-icon "menu"}}
+    {{/paper-button}}
+    {{#paper-button iconButton=true}}
+      {{paper-icon "menu"}}
+    {{/paper-button}}
+    {{#paper-button iconButton=true}}
+      {{paper-icon "menu"}}
+    {{/paper-button}}
+    {{#paper-button iconButton=true}}
+      {{paper-icon "menu"}}
+    {{/paper-button}}
+    {{#paper-button iconButton=true}}
+      {{paper-icon "menu"}}
+    {{/paper-button}}
+    {{#paper-button iconButton=true}}
+      {{paper-icon "menu"}}
+    {{/paper-button}}
+    {{#paper-button iconButton=true}}
+      {{paper-icon "menu"}}
+    {{/paper-button}}
+    {{#paper-button iconButton=true}}
+      {{paper-icon "menu"}}
+    {{/paper-button}}
+    {{#paper-button iconButton=true}}
+      {{paper-icon "menu"}}
+    {{/paper-button}}
+  {{/paper-toolbar-tools}}
+  {{else if (eq current.tab "blub")}}
+    {{#paper-toolbar-tools}}
+    {{#paper-button iconButton=true}}
+      {{paper-icon "menu"}}
+    {{/paper-button}}
+    {{#paper-button iconButton=true}}
+      {{paper-icon "menu"}}
+    {{/paper-button}}
+    {{#paper-button iconButton=true}}
+      {{paper-icon "menu"}}
+    {{/paper-button}}
+    {{#paper-button iconButton=true}}
+      {{paper-icon "menu"}}
+    {{/paper-button}}
+    {{#paper-button iconButton=true}}
+      {{paper-icon "menu"}}
+    {{/paper-button}}
+    {{#paper-button iconButton=true}}
+      {{paper-icon "menu"}}
+    {{/paper-button}}
+    {{#paper-button iconButton=true}}
+      {{paper-icon "menu"}}
+    {{/paper-button}}
+    {{#paper-button iconButton=true}}
+      {{paper-icon "menu"}}
+    {{/paper-button}}
+    {{#paper-button iconButton=true}}
+      {{paper-icon "menu"}}
+    {{/paper-button}}
+    {{#paper-button iconButton=true}}
+      {{paper-icon "menu"}}
+    {{/paper-button}}
+    {{/paper-toolbar-tools}}
+  {{else if (eq current.tab "planet")}}
+    {{#paper-toolbar-tools}}
+    {{#paper-button iconButton=true}}
+      {{paper-icon "menu"}}
+    {{/paper-button}}
+    {{#paper-button iconButton=true}}
+      {{paper-icon "menu"}}
+    {{/paper-button}}
+    {{#paper-button iconButton=true}}
+      {{paper-icon "menu"}}
+    {{/paper-button}}
+    {{#paper-button iconButton=true}}
+      {{paper-icon "menu"}}
+    {{/paper-button}}
+    {{#paper-button iconButton=true}}
+      {{paper-icon "menu"}}
+    {{/paper-button}}
+    {{#paper-button iconButton=true}}
+      {{paper-icon "menu"}}
+    {{/paper-button}}
+    {{#paper-button iconButton=true}}
+      {{paper-icon "menu"}}
+    {{/paper-button}}
+    {{#paper-button iconButton=true}}
+      {{paper-icon "menu"}}
+    {{/paper-button}}
+    {{#paper-button iconButton=true}}
+      {{paper-icon "menu"}}
+    {{/paper-button}}
+    {{#paper-button iconButton=true}}
+      {{paper-icon "menu"}}
+    {{/paper-button}}
+    {{/paper-toolbar-tools}}
+  {{else if (eq current.tab "coaster")}}
+    {{#paper-toolbar-tools}}
+    {{#paper-button iconButton=true}}
+      {{paper-icon "menu"}}
+    {{/paper-button}}
+    {{#paper-button iconButton=true}}
+      {{paper-icon "menu"}}
+    {{/paper-button}}
+    {{#paper-button iconButton=true}}
+      {{paper-icon "menu"}}
+    {{/paper-button}}
+    {{#paper-button iconButton=true}}
+      {{paper-icon "menu"}}
+    {{/paper-button}}
+    {{#paper-button iconButton=true}}
+      {{paper-icon "menu"}}
+    {{/paper-button}}
+    {{#paper-button iconButton=true}}
+      {{paper-icon "menu"}}
+    {{/paper-button}}
+    {{#paper-button iconButton=true}}
+      {{paper-icon "menu"}}
+    {{/paper-button}}
+    {{#paper-button iconButton=true}}
+      {{paper-icon "menu"}}
+    {{/paper-button}}
+    {{#paper-button iconButton=true}}
+      {{paper-icon "menu"}}
+    {{/paper-button}}
+    {{#paper-button iconButton=true}}
+      {{paper-icon "menu"}}
+    {{/paper-button}}
+    {{/paper-toolbar-tools}}
+  {{/if}}
+{{/liquid-bind}}

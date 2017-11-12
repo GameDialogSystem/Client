@@ -9,12 +9,44 @@ export default Ember.Controller.extend({
       this.transitionToRoute('index');
     },
 
-    addNewElement(){
+    /**
+     * Adds a new block to the model.
+     *
+     * @param {Output} output - the outgoing pin where the action was initialized
+     * @param {Point} point - the position where the mouse button was released and
+     * the new block should be inserted
+     */
+    createNewDialogLine(output, point){
+        let store = this.get('store');
+        let dialog = this.get('model');
 
+
+        let dialogLine = store.createRecord('dialog-line', {
+          message : `I'm a new dialog line. Change me to something meaningfull :)`,
+          x: point.x - 27,
+          y: point.y - 20
+        });
+        dialogLine.set('id', Ember.guidFor(dialogLine));
+
+      //  let input = store.createRecord('input', {
+      //    output : output
+      //  })
+      //  input.set('id', Ember.guidFor(input));
+        //dialogLine.get('inputs').pushObject(input);
+
+        dialog.get('lines').pushObject(dialogLine);
+
+        dialogLine.save().then(function(line){
+          let input = line.get('inputs.firstObject');
+          input.set('output', output);
+        })
     },
 
-    reroute(){
-
+    deleteBlock(block){
+      block.get('inputs').forEach(function(input){
+        input.destroyRecord();
+      })
+      block.destroyRecord();
     },
 
     cancelReroute(){
@@ -57,13 +89,11 @@ export default Ember.Controller.extend({
     updateDialogLine(dialogLine){
       this.get('store').findRecord('dialog-line', dialogLine.get('id')).then(function(line) {
         // ...after the record has loaded
-        console.log(dialogLine.get('message'));
         line.save();
       });
     },
 
-    connectionReroute: function(x, y){
-      console.log('reroute connection '+x+', '+y);
+    connectionReroute: function(){
     }
   }
 });

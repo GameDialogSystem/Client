@@ -1,24 +1,61 @@
+
 <flow-input-container>
-  {{#each model.inputs as |input|}}
-    {{flow-input
-        parent=model
-        model=input
-        acceptRerouting=(action "acceptRerouting")
-        cancelReroute=(action "cancelReroute")}}
-  {{/each}}
+    {{#each model.inputs as |input|}}
+      {{flow-input
+          scrollOffsetX=scrollOffsetX
+          scrollOffsetY=scrollOffsetY
+          parent=model
+          model=input
+          acceptRerouting=(action "acceptRerouting")
+          cancelReroute=(action "cancelReroute")}}
+
+      {{textarea
+        autoresize=true
+        cols=40
+        rows=displayedRows
+        max-rows=10
+        value=(mut input.output.response)
+      }}
+    {{/each}}
 </flow-input-container>
 
+<div>
 <flow-content>
-{{textarea value=(mut model.message) cols="80" rows="6"}}
+  <div class="actor">
+    {{paper-icon "person" size=48}}
+  </div>
+  <div class="message">
+    {{textarea autoresize=true
+               cols=40
+               rows=displayedRows
+               max-rows=10
+               value=(mut model.message)
+             }}
+
+
+    {{!--
+    {{#paper-list}}
+
+      {{#each model.outputs as |answer|}}
+        {{#paper-item as |controls|}}
+          {{textarea autoresize=true cols=40 rows=displayedRows max-rows=10 value=(mut answer.response)}}
+        {{/paper-item}}
+      {{/each}}
+    {{/paper-list}}
+    --}}
+  </div>
 </flow-content>
+</div>
 
 <flow-output-container>
   {{#each model.outputs as |output|}}
     {{flow-output
-        parent=model
+        scrollOffsetX=scrollOffsetX
+        scrollOffsetY=scrollOffsetY
+        parent=(mut model)
         model=output
-        reroute=(action "reroute")
-        cancelReroute=(action "cancelReroute")}}
+        reroute=reroute
+        connectToNewBlock=(action "connectToNewBlock")}}
   {{/each}}
 </flow-output-container>
 
