@@ -1,9 +1,7 @@
 import DS from 'ember-data';
 import FlowBlockModel from 'flow-logic/models/block';
 
-import AutoSaveMixin from '../mixins/auto-save'
-
-export default FlowBlockModel.extend(AutoSaveMixin, {
+export default FlowBlockModel.extend({
   /**
   * Reference to the containing dialog
   */
@@ -21,7 +19,30 @@ export default FlowBlockModel.extend(AutoSaveMixin, {
   message: DS.attr('string'),
 
   /**
+   * indicates if a dialog line was already presented to the user.
+   */
+  alreadySaid: DS.attr('boolean'),
+
+  /**
   * defines the related answers to a dialog line.
   */
   //answers: DS.hasMany('dialog-answer', {inverse: 'belongsTo'})
+
+  /**
+   * the message of a dialog line is defined by multiple sentences
+   * which are connected to a dialog line with this association
+   */
+   sentences: DS.hasMany('dialog-sentence'),
+
+   /**
+    * array that contains all successor dialog lines.
+    */
+   nextLines: DS.hasMany('dialog-line', { inverse: 'previousLine' }),
+
+   /**
+    * defines the relationship to the precessor. All dialog lines except the
+    * starting one must have an precessor. To check if a dialog line is the
+    * starting point of a connection, check if this attribute is null.
+    */
+   previousLine: DS.belongsTo('dialog-line', { inverse: 'nextLines' })
 });

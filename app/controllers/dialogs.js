@@ -4,6 +4,14 @@ export default Ember.Controller.extend({
   isShowingOptions: false,
   answerToBeEdited : null,
 
+  uuid4v: function()
+  {
+      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+          var r = Math.random()*16|0, v = c === 'x' ? r : (r&0x3|0x8);
+          return v.toString(16);
+      });
+  },
+
   actions : {
     rerouteToIndex(){
       this.transitionToRoute('index');
@@ -20,13 +28,28 @@ export default Ember.Controller.extend({
         let store = this.get('store');
         let dialog = this.get('model');
 
+        let input = store.createRecord('input', {
+          id : this.uuid4v(),
+          x: point.x,
+          y: point.y,
+
+          output: output
+        });
 
         let dialogLine = store.createRecord('dialog-line', {
+          id : this.uuid4v(),
           message : `I'm a new dialog line. Change me to something meaningfull :)`,
           x: point.x - 27,
-          y: point.y - 20
+          y: point.y - 20,
+
+
+          inputs : [
+            input
+          ]
         });
-        dialogLine.set('id', Ember.guidFor(dialogLine));
+
+        input.set('belongsTo', dialogLine);
+        //dialogLine.set('id', Ember.guidFor(dialogLine));
 
       //  let input = store.createRecord('input', {
       //    output : output
@@ -36,10 +59,7 @@ export default Ember.Controller.extend({
 
         dialog.get('lines').pushObject(dialogLine);
 
-        dialogLine.save().then(function(line){
-          let input = line.get('inputs.firstObject');
-          input.set('output', output);
-        })
+        dialog.save();
     },
 
     deleteBlock(block){
@@ -53,38 +73,6 @@ export default Ember.Controller.extend({
 
     },
 
-    addAnswer(dialogLine){
-      let store = this.get('store');
-      let answer = store.createRecord('dialog-answer', {
-        id: Date.now(),
-        response: 'Rails is Omakase',
-        requirement: 'Might',
-        requirementValue: '6'
-      });
-
-      dialogLine.get('answers').pushObject(answer);
-
-      answer.save();
-    },
-
-    showOptionsForAnswer(dialogAnswer){
-      this.toggleProperty('isShowingOptions');
-      this.set('answerToBeEdited', dialogAnswer);
-    },
-
-    changeAnswer(dialogAnswer){
-      this.get('store').findRecord('dialog-answer', dialogAnswer.get('id')).then(function(answer) {
-        answer.save();
-      });
-    },
-
-    deleteAnswer(dialogAnswer){
-      dialogAnswer.destroyRecord();
-    },
-
-    closeChangeAnswer(){
-      this.toggleProperty('isShowingOptions');
-    },
 
     updateDialogLine(dialogLine){
       this.get('store').findRecord('dialog-line', dialogLine.get('id')).then(function(line) {
