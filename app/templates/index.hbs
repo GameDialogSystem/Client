@@ -1,34 +1,17 @@
-{{#paper-toolbar}}
-  {{#paper-toolbar-tools}}
-    <h2>
-      Cute Dialog System
-    </h2>
-    <span class="flex"></span>
-    {{#paper-button iconButton=true onClick=(action "createNewDialog")}}
-      {{paper-icon "create-new-folder"}}
-    {{/paper-button}}
-    {{#paper-button onClick=(action "showAbout" "about")}}
-      About
-    {{/paper-button}}
-    {{#paper-button onClick=(action "showContact" "contact")}}
-      Contact
-    {{/paper-button}}
-  {{/paper-toolbar-tools}}
-{{/paper-toolbar}}
+{{paper-appbar title=model.name}}
+
 
 <div class="gs-item-container">
   {{#each model as |dialog|}}
 
       {{#paper-card as |card|}}
         {{#card.title as |title|}}
-          {{#link-to "dialogs" dialog}}
             {{#title.text as |text|}}
               {{#text.headline}}{{dialog.name}}{{/text.headline}}
             {{/title.text}}
-          {{/link-to}}
         {{/card.title}}
         {{#card.actions}}
-          {{#paper-button onClick=(action "modifyDialog" dialog)}}Modify{{/paper-button}}
+          {{#paper-button onClick=(action "modifyDialog" dialog.id)}}Modify{{/paper-button}}
         {{/card.actions}}
       {{/paper-card}}
   {{/each}}

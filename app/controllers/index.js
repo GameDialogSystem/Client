@@ -7,7 +7,7 @@ export default Ember.Controller.extend({
     },
 
     modifyDialog(dialog){
-        this.transitionToRoute('dialogs', dialog)
+        this.transitionToRoute('dialogs.edit', dialog)
     },
 
     closePromptDialog(){

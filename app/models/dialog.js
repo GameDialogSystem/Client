@@ -11,11 +11,11 @@ export default DS.Model.extend({
   * Each dialog needs to have a starting line as an entry point.
   * This entry point is defined explicitly by this relationship
   */
-  startingLine: DS.belongsTo('dialog-line', {async: false}),
+  startingLine: DS.belongsTo('dialog-line'),
 
   /**
   * All dialog lines are part of one dialog. This relationship is defined by this
   * property.
   */
-  lines: DS.hasMany('dialog-line', {async: false})
+  lines: DS.hasMany('dialog-line')
 });

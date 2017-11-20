@@ -1,14 +1,1 @@
-{{paper-appbar title=model.name}}
-
-<div class="gs-side-container">
-
-  <div>
-
-    {{!-- The container to show the dialog lines --}}
-    {{flow-container
-      blocks=model.lines
-      deleteBlock=(action 'deleteBlock')
-      connectToNewBlock=(action 'createNewDialogLine')}}
-    {{!-- The container to show the dialog lines --}}
-  </div>
-</div>
+{{outlet}}
