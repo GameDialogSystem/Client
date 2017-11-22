@@ -36,6 +36,7 @@ export default Ember.Controller.extend({
           output: output
         });
 
+
         let dialogLine = store.createRecord('dialog-line', {
           id : this.uuid4v(),
           message : `I'm a new dialog line. Change me to something meaningfull :)`,
@@ -49,17 +50,12 @@ export default Ember.Controller.extend({
         });
 
         input.set('belongsTo', dialogLine);
-        //dialogLine.set('id', Ember.guidFor(dialogLine));
-
-      //  let input = store.createRecord('input', {
-      //    output : output
-      //  })
-      //  input.set('id', Ember.guidFor(input));
-        //dialogLine.get('inputs').pushObject(input);
 
         dialog.get('lines').pushObject(dialogLine);
 
-        dialog.save();
+        dialogLine.save();
+
+        //dialog.save();
     },
 
     deleteBlock(block){
@@ -83,5 +79,5 @@ export default Ember.Controller.extend({
 
     connectionReroute: function(){
     }
-  }  
+  }
 });
