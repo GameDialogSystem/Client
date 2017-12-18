@@ -4,13 +4,6 @@ export default Ember.Controller.extend({
   isShowingOptions: false,
   answerToBeEdited : null,
 
-  uuid4v: function()
-  {
-      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-          var r = Math.random()*16|0, v = c === 'x' ? r : (r&0x3|0x8);
-          return v.toString(16);
-      });
-  },
 
   actions : {
     rerouteToIndex(){
@@ -27,22 +20,22 @@ export default Ember.Controller.extend({
     createNewDialogLine(output, point){
         let store = this.get('store');
         let dialog = this.get('model');
+        let lines = dialog.get('lines');
+        let linesCount = lines.get("length");
 
         let input = store.createRecord('input', {
-          id : this.uuid4v(),
+          id : "line" + (linesCount+2) + "input" + 0,
           x: point.x,
           y: point.y,
 
-          output: output
+          output: output,
         });
 
-
         let dialogLine = store.createRecord('dialog-line', {
-          id : this.uuid4v(),
+          id : linesCount+2,
           message : `I'm a new dialog line. Change me to something meaningfull :)`,
           x: point.x - 27,
           y: point.y - 20,
-
 
           inputs : [
             input

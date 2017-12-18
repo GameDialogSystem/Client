@@ -28,12 +28,6 @@ export default FlowBlockModel.extend({
   */
   //answers: DS.hasMany('dialog-answer', {inverse: 'belongsTo'})
 
-  /**
-   * the message of a dialog line is defined by multiple sentences
-   * which are connected to a dialog line with this association
-   */
-   sentences: DS.hasMany('dialog-sentence'),
-
    /**
     * array that contains all successor dialog lines.
     */
