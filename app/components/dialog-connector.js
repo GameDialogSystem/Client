@@ -8,8 +8,7 @@ export default Ember.Component.extend({
   start : null,
   end : null,
 
-  d: computed('start',
-              'end', 'end.y', function(){
+  d: computed("startX", "startY", "endX", "endY", () => {
 
 //-answersCount*30+10+index*30
     let startX = this.get('start').x;
@@ -23,6 +22,8 @@ export default Ember.Component.extend({
 
     let dX = endX;
     let dY = startY; //endY - (endY - startY) / 2;
+
+    console.log(`sx:${startX} sy:${startY} ex:${endX} ey:${endY}`);
 
 
     if(isNaN(startX) || isNaN(startY) || isNaN(endX) || isNaN(endY))

@@ -1,6 +1,11 @@
 import FlowElement from 'flow-logic/components/flow-element';
 
 export default FlowElement.extend({
+  // inject the store to create the blank outputs to allow
+  // user the creation of new connections from an existing
+  // dialog line
+  store: Ember.inject.service(),
+
   isExtended: true,
   displayedRows: 3,
 
@@ -11,6 +16,16 @@ export default FlowElement.extend({
 
   didInsertElement() {
     this._super(...arguments);
+
+    let outputs = this.get("model.outputs");
+
+    // create an empty output connector to allow the creation of new connections
+    let output = this.get("store").createRecord('output', {
+      id: `line${this.get("model.id")}output${outputs.get("length")}`
+    });
+
+    // add the empty output connector to the dialog line
+    this.get("model.outputs").pushObject(output);
   },
 
   actions: {
