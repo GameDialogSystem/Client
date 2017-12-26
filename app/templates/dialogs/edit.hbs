@@ -1,10 +1,8 @@
 {{paper-appbar title=model.name}}
 
 <div class="gs-side-container">
-  <div>
     {{flow-container
       blocks=model.lines
       deleteBlock=(action 'deleteBlock')
       connectToNewBlock=(action 'createNewDialogLine')}}
-  </div>
 </div>

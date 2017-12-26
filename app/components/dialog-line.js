@@ -1,3 +1,4 @@
+import Ember from 'ember';
 import FlowElement from 'flow-logic/components/flow-element';
 
 export default FlowElement.extend({
@@ -13,10 +14,7 @@ export default FlowElement.extend({
 
   autoresizeEnabled : true,
 
-
-  didInsertElement() {
-    this._super(...arguments);
-
+  addEmptyOutput: function(){
     let outputs = this.get("model.outputs");
 
     // create an empty output connector to allow the creation of new connections
@@ -26,6 +24,12 @@ export default FlowElement.extend({
 
     // add the empty output connector to the dialog line
     this.get("model.outputs").pushObject(output);
+  },
+
+  didInsertElement(){
+    this._super(...arguments);
+
+    this.addEmptyOutput();
   },
 
   actions: {
@@ -43,6 +47,7 @@ export default FlowElement.extend({
       let connectToNewBlock = this.get('connectToNewBlock');
       if(connectToNewBlock !== null || connectToNewBlock !== undefined){
         connectToNewBlock(output, point);
+        this.addEmptyOutput();
       }
     },
   },

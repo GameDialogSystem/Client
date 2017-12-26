@@ -31,6 +31,7 @@ export default Ember.Controller.extend({
           output: output,
         });
 
+
         let dialogLine = store.createRecord('dialog-line', {
           id : linesCount+2,
           message : `I'm a new dialog line. Change me to something meaningfull :)`,
@@ -42,13 +43,22 @@ export default Ember.Controller.extend({
           ]
         });
 
+        var d = new Date();
+        var n = d.getTime();
+        let dialogConnection = store.createRecord('connection', {
+          "id" : n,
+          "input" : input,
+          "output" : output
+        })
+
         input.set('belongsTo', dialogLine);
 
         dialog.get('lines').pushObject(dialogLine);
 
-        dialogLine.save();
+      //  dialogLine.save();
 
         //dialog.save();
+        //
     },
 
     deleteBlock(block){
