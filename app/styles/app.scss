@@ -345,7 +345,7 @@ flow-element{
 
   z-index: 1;
   background: rgba(255, 255, 255, 0.75);
-
+  
   > div{
     position: relative;
   }
@@ -511,4 +511,9 @@ div.flow-selection-indicator{
   height:0px;
   background: #90CAF9;
   border: solid 1px #64B5F6;
+}
+
+.selected{
+  background: #E6EE9C;
+  box-sizing: border-box;
 }

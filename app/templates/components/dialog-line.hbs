@@ -1,4 +1,3 @@
-
 <flow-input-container>
     {{#each model.inputs as |input|}}
       {{flow-input
@@ -12,12 +11,13 @@
 </flow-input-container>
 
 <div>
+  {{positionX}}/{{positionY}}
 <flow-content>
   <div class="actor">
     {{paper-icon "person" size=48}}
   </div>
   <div class="message">
-    
+
     {{textarea autoresize=true
                cols=40
                rows=displayedRows

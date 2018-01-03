@@ -43,14 +43,6 @@ export default Ember.Controller.extend({
           ]
         });
 
-        var d = new Date();
-        var n = d.getTime();
-        let dialogConnection = store.createRecord('connection', {
-          "id" : n,
-          "input" : input,
-          "output" : output
-        })
-
         input.set('belongsTo', dialogLine);
 
         dialog.get('lines').pushObject(dialogLine);
