@@ -1,5 +1,8 @@
-{{paper-appbar title=model.name}}
-
+{{#paper-appbar title=model.name}}
+  {{paper-appbar-tab label="Start"}}
+  {{paper-appbar-tab label="View"}}
+  {{paper-appbar-tab label="Dialog Line"}}
+{{/paper-appbar}}
 <div class="gs-side-container">
     {{flow-container
       blocks=model.lines

@@ -11,7 +11,6 @@
 </flow-input-container>
 
 <div>
-  {{positionX}}/{{positionY}}
 <flow-content>
   <div class="actor">
     {{paper-icon "person" size=48}}
@@ -24,18 +23,6 @@
                max-rows=10
                value=(mut model.message)
              }}
-
-
-    {{!--
-    {{#paper-list}}
-
-      {{#each model.outputs as |answer|}}
-        {{#paper-item as |controls|}}
-          {{textarea autoresize=true cols=40 rows=displayedRows max-rows=10 value=(mut answer.response)}}
-        {{/paper-item}}
-      {{/each}}
-    {{/paper-list}}
-    --}}
   </div>
 </flow-content>
 </div>
