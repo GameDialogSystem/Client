@@ -1,7 +1,79 @@
-{{#paper-appbar title=model.name}}
-  {{paper-appbar-tab label="Start"}}
-  {{paper-appbar-tab label="View"}}
-  {{paper-appbar-tab label="Dialog Line"}}
+{{#paper-appbar title=model.name as |appbar|}}
+  {{appbar.tab label="Start" value="foo"}}
+  {{appbar.tab label="View" value="bar"}}
+  {{appbar.tab label="Dialog Line" value="blub"}}
+  {{appbar.tab label="Dialog Line" value="planet"}}
+  {{appbar.tab label="Dialog Line" value="coaster"}}
+
+  {{#appbar.tabContent value="foo"}}
+    {{#paper-toolbar-tools}}
+      {{#paper-button iconButton=true}}
+        {{paper-icon "backup"}}
+      {{/paper-button}}
+    {{/paper-toolbar-tools}}
+  {{/appbar.tabContent}}
+
+  {{#appbar.tabContent value="bar"}}
+    {{#paper-toolbar-tools}}
+      {{#paper-button iconButton=true}}
+        {{paper-icon "backup"}}
+      {{/paper-button}}
+      {{#paper-button iconButton=true}}
+        {{paper-icon "backup"}}
+      {{/paper-button}}
+    {{/paper-toolbar-tools}}
+  {{/appbar.tabContent}}
+
+  {{#appbar.tabContent value="blub"}}
+    {{#paper-toolbar-tools}}
+      {{#paper-button iconButton=true}}
+        {{paper-icon "backup"}}
+      {{/paper-button}}
+      {{#paper-button iconButton=true}}
+        {{paper-icon "backup"}}
+      {{/paper-button}}
+      {{#paper-button iconButton=true}}
+        {{paper-icon "backup"}}
+      {{/paper-button}}
+    {{/paper-toolbar-tools}}
+  {{/appbar.tabContent}}
+
+  {{#appbar.tabContent value="planet"}}
+    {{#paper-toolbar-tools}}
+      {{#paper-button iconButton=true}}
+        {{paper-icon "backup"}}
+      {{/paper-button}}
+      {{#paper-button iconButton=true}}
+        {{paper-icon "backup"}}
+      {{/paper-button}}
+      {{#paper-button iconButton=true}}
+        {{paper-icon "backup"}}
+      {{/paper-button}}
+      {{#paper-button iconButton=true}}
+        {{paper-icon "backup"}}
+      {{/paper-button}}
+    {{/paper-toolbar-tools}}
+  {{/appbar.tabContent}}
+
+  {{#appbar.tabContent value="coaster"}}
+    {{#paper-toolbar-tools}}
+      {{#paper-button iconButton=true}}
+        {{paper-icon "backup"}}
+      {{/paper-button}}
+      {{#paper-button iconButton=true}}
+        {{paper-icon "backup"}}
+      {{/paper-button}}
+      {{#paper-button iconButton=true}}
+        {{paper-icon "backup"}}
+      {{/paper-button}}
+      {{#paper-button iconButton=true}}
+        {{paper-icon "backup"}}
+      {{/paper-button}}
+      {{#paper-button iconButton=true}}
+        {{paper-icon "backup"}}
+      {{/paper-button}}
+    {{/paper-toolbar-tools}}
+  {{/appbar.tabContent}}
 {{/paper-appbar}}
 <div class="gs-side-container">
     {{flow-container
