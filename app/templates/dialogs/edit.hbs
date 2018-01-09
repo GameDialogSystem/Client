@@ -1,4 +1,5 @@
 {{#paper-appbar title=model.name as |appbar|}}
+
   {{appbar.tab label="Start" value="foo"}}
   {{appbar.tab label="View" value="bar"}}
   {{appbar.tab label="Dialog Line" value="blub"}}
@@ -7,9 +8,69 @@
 
   {{#appbar.tabContent value="foo"}}
     {{#paper-toolbar-tools}}
+      {{! Load dialog button}}
       {{#paper-button iconButton=true}}
-        {{paper-icon "backup"}}
+        {{paper-icon "file_download"}}
+
+        {{#paper-tooltip position="bottom"}}
+          Open Dialog
+        {{/paper-tooltip}}
       {{/paper-button}}
+
+      {{! Save dialog button}}
+      {{#paper-button iconButton=true onClick=(action "saveDialog")}}
+        {{paper-icon "file_upload"}}
+
+        {{#paper-tooltip position="bottom"}}
+          Save Dialog
+        {{/paper-tooltip}}
+      {{/paper-button}}
+
+      {{! Undo change button}}
+      {{#paper-button iconButton=true onClick=(action "undoChange")}}
+        {{paper-icon "undo"}}
+
+        {{#paper-tooltip position="bottom"}}
+          Undo Changes
+        {{/paper-tooltip}}
+      {{/paper-button}}
+
+      {{! Redo change button}}
+      {{#paper-button iconButton=true onClick=(action "redoChange")}}
+        {{paper-icon "redo"}}
+
+        {{#paper-tooltip position="bottom"}}
+          Redo Changes
+        {{/paper-tooltip}}
+      {{/paper-button}}
+
+      {{! Delete element button}}
+      {{#paper-button iconButton=true}}
+        {{paper-icon "delete"}}
+
+        {{#paper-tooltip position="bottom"}}
+          Delete Element
+        {{/paper-tooltip}}
+      {{/paper-button}}
+
+      {{! Find and replace button}}
+      {{#paper-button iconButton=true}}
+        {{paper-icon "find_replace"}}
+
+        {{#paper-tooltip position="bottom"}}
+          Find & replace text
+        {{/paper-tooltip}}
+      {{/paper-button}}
+
+      {{! Translate element}}
+      {{#paper-button iconButton=true}}
+        {{paper-icon "translate"}}
+
+        {{#paper-tooltip position="bottom"}}
+          Translate Text
+        {{/paper-tooltip}}
+      {{/paper-button}}
+
     {{/paper-toolbar-tools}}
   {{/appbar.tabContent}}
 
@@ -74,7 +135,9 @@
       {{/paper-button}}
     {{/paper-toolbar-tools}}
   {{/appbar.tabContent}}
+
 {{/paper-appbar}}
+
 <div class="gs-side-container">
     {{flow-container
       blocks=model.lines

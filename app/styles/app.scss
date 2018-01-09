@@ -70,6 +70,7 @@ md-appbar{
 
   .md-padding{
     background: #F5F5F5;
+    padding: 0;
   }
 
   md-ink-bar{
@@ -308,7 +309,7 @@ flow-block-actions{
 @import 'ember-paper';
 body{
   background: #DCE775;
-  background: #F5F5F5;
+  background: #E0E0E0;
 }
 
 $margin: 12px;
@@ -343,9 +344,9 @@ flow-element{
   border: none;
   outline: none;
 
-  z-index: 1;
+
   background: rgba(255, 255, 255, 0.75);
-  
+
   > div{
     position: relative;
   }
@@ -495,6 +496,8 @@ flow-container{
 
   width: 100%;
   height: 100%;
+
+  overflow: hidden;
 }
 multi-selection{
   position: absolute;

@@ -53,6 +53,18 @@ export default Ember.Controller.extend({
         //
     },
 
+    undoChange: function(){
+      this.get("model").undo();
+    },
+
+    redoChange: function(){
+      this.get("model").redo();
+    },
+
+    saveDialog: function(){
+      this.get("model").save();
+    },
+
     deleteBlock(block){
       block.get('inputs').forEach(function(input){
         input.destroyRecord();
