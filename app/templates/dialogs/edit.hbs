@@ -71,6 +71,14 @@
         {{/paper-tooltip}}
       {{/paper-button}}
 
+      {{! Automatically locate dialog lines}}
+      {{#paper-button iconButton=true onClick=(action "automaticallyRelocateLines")}}
+        {{paper-icon "transform"}}
+
+        {{#paper-tooltip position="bottom"}}
+          Relayout Dialog Lines
+        {{/paper-tooltip}}
+      {{/paper-button}}
     {{/paper-toolbar-tools}}
   {{/appbar.tabContent}}
 

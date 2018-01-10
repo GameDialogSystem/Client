@@ -53,6 +53,30 @@ export default Ember.Controller.extend({
         //
     },
 
+
+    /**
+     * automaticallyRelocateLines - Automatically lines within a perfect
+     * layout.
+     *
+     * Be aware that this function will be moved to the flow logic addon
+     * soon.
+     *
+     * @return {type}  description
+     */
+    automaticallyRelocateLines: function(){
+      let line = this.get("model.startingLine");
+
+      line.set("x", 10);
+      line.set("y", 10);
+
+      let nextLines = line.get("nextLines");
+
+      nextLines.forEach(function(line){
+        line.set("x", 10);
+        line.set("y", 150);
+      })
+    },
+
     undoChange: function(){
       this.get("model").undo();
     },
