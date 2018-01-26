@@ -9,8 +9,6 @@ export default FlowOutputModel.extend({
   */
   //nextDialogLine: DS.belongsTo('dialog-line', {inverse: 'askedBy'}),
 
-  belongsTo: DS.belongsTo('dialog-line'),
-
   /**
   * Defines the requirement that must be fullfilled in order to give this answer.
   */

@@ -1,7 +1,9 @@
 import DS from 'ember-data';
 import FlowBlockModel from 'flow-logic/models/block';
+import { computed } from '@ember/object';
 
 export default FlowBlockModel.extend({
+
   /**
   * Reference to the containing dialog
   */
@@ -27,16 +29,13 @@ export default FlowBlockModel.extend({
   * defines the related answers to a dialog line.
   */
   //answers: DS.hasMany('dialog-answer', {inverse: 'belongsTo'})
+  //
 
-   /**
-    * array that contains all successor dialog lines.
-    */
-   nextLines: DS.hasMany('dialog-line', { inverse: 'previousLine' }),
 
    /**
     * defines the relationship to the precessor. All dialog lines except the
     * starting one must have an precessor. To check if a dialog line is the
     * starting point of a connection, check if this attribute is null.
     */
-   previousLine: DS.belongsTo('dialog-line', { inverse: 'nextLines' })
+   previousLine: DS.belongsTo('dialog-line', { inverse: 'nextLines' }),
 });

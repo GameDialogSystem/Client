@@ -72,7 +72,11 @@
       {{/paper-button}}
 
       {{! Automatically locate dialog lines}}
-      {{#paper-button iconButton=true onClick=(action "automaticallyRelocateLines")}}
+      {{#paper-button
+        iconButton=true
+
+        onClick=(action "automaticallyRelocateLines" model.startingLine 0)
+      }}
         {{paper-icon "transform"}}
 
         {{#paper-tooltip position="bottom"}}

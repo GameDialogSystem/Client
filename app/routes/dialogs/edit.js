@@ -4,13 +4,15 @@ import TimeMachine from 'ember-time-machine';
 export default Ember.Route.extend({
 
     model(params) {
-      const dialog = this.get('store').findRecord('dialog', params.dialog_id, {include: 'lines'});
+        const store = this.get('store');
+        const dialog = store.findRecord('dialog', params.dialog_id)
 
-      //const ignoredProperties = ["lines.@each.outputs.@each.y"]
 
+
+      // transform the object to a time machine object to have an undo/redo
+      // stack
       const dialogWithHistory = TimeMachine.Object.create({
-        content: dialog//,
-        //ignoredProperties
+        content: dialog
       });
 
       return dialogWithHistory;

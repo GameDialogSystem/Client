@@ -4,7 +4,6 @@ export default Ember.Controller.extend({
   isShowingOptions: false,
   answerToBeEdited : null,
 
-
   actions : {
     rerouteToIndex(){
       this.transitionToRoute('index');
@@ -63,18 +62,8 @@ export default Ember.Controller.extend({
      *
      * @return {type}  description
      */
-    automaticallyRelocateLines: function(){
-      let line = this.get("model.startingLine");
-
-      line.set("x", 10);
-      line.set("y", 10);
-
-      let nextLines = line.get("nextLines");
-
-      nextLines.forEach(function(line){
-        line.set("x", 10);
-        line.set("y", 150);
-      })
+    automaticallyRelocateLines: function(parentLine){
+      parentLine.set("relayoutTimestamp", Date.now());
     },
 
     undoChange: function(){

@@ -1,15 +1,33 @@
 @import "color-palette";
 @import 'ember-paper';
 
-md-appbar{
+// all elements of the application are inserted into this container
+.gs-application{
   width: 100%;
-  display: block;
+  height: 100vh;
 
-  min-height: 96px;
 
+  display: flex;
+  flex-direction: column;
+
+  .gs-side-container{
+      width: 100%;
+      flex-grow:2;
+
+      display: flex;
+  }
+
+  .gs-side-container > div:nth-child(1) {
+    position: relative;
+    background: #E0E0E0;
+
+    flex: 1;
+    overflow: scroll;
+  }
+}
+
+md-appbar{
   background: #01579B;
-
-
 
   md-appbar-tabbar{
     display: flex;
@@ -242,23 +260,7 @@ gs-item-movable{
   }
 }
 
-.gs-side-container{
-    display: flex;
-    flex-direction: column;
-    width: 100%;
 
-    min-height:100vh;
-}
-
-
-
-.gs-side-container > div:nth-child(1) {
-  position: relative;
-  background: #E0E0E0;
-
-  flex: 1;
-  overflow: scroll;
-}
 
 svg{
   position: absolute;
@@ -310,6 +312,13 @@ flow-block-actions{
 body{
   background: #DCE775;
   background: #E0E0E0;
+
+  >div{
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+  }
 }
 
 $margin: 12px;
@@ -330,7 +339,6 @@ $connectorSize: 32px;
 flow-element{
   position: absolute;
 
-  min-width: 200px;
   min-height: 150px;
   overflow: hidden;
 
@@ -428,6 +436,7 @@ flow-element{
   }
 
   flow-content{
+    position: relative;
     padding-left: 1em;
     padding-right: 1em;
     padding-top: 1em;
@@ -485,25 +494,18 @@ response{
   padding: 1em;
 }
 
-
+.tse-content .scrollable-content{
+  position: relative;
+}
 
 /**
 *
 * Flow Logic Addon
 */
 flow-container{
-  position: absolute;
-
+  position: relative;
   width: 100%;
-  height: 100%;
-
-  overflow: hidden;
-}
-multi-selection{
-  position: absolute;
-
-  width: 100%;
-  height: 100%;
+  overflow: scroll;
 }
 
 div.flow-selection-indicator{

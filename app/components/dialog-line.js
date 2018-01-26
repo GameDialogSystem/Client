@@ -19,18 +19,29 @@ export default FlowElement.extend({
 
     // create an empty output connector to allow the creation of new connections
     let output = this.get("store").createRecord('output', {
-      id: `line${this.get("model.id")}output${outputs.get("length")}`
+      id: `line${this.get("model.id")}output${outputs.get("length")}`,
+      belongsTo: this.get("model.content"),
     });
 
     // add the empty output connector to the dialog line
     this.get("model.outputs").pushObject(output);
   },
 
-  didInsertElement(){
-    this._super(...arguments);
+  /**
+   * isLoaded - Observer that listens for the model state. In case that
+   * the model has the state "root.loaded.saved" the model was fully loaded
+   * and the width and height can be set by the DOM element geometry.
+   */
+  isLoaded: Ember.observer("model.currentState.stateName", function(){
+    if(this.get("model.currentState.stateName") === "root.loaded.saved"){
+      this.addEmptyOutput();
 
-    this.addEmptyOutput();
-  },
+      const element = Ember.$(this.element);
+      this.set("model.width", element.width());
+      this.set("model.height", element.height());
+    }
+  }),
+
 
   actions: {
 
