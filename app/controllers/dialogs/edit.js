@@ -16,22 +16,27 @@ export default Ember.Controller.extend({
      * @param {Point} point - the position where the mouse button was released and
      * the new block should be inserted
      */
-    createNewDialogLine(output, point){
-        let store = this.get('store');
-        let dialog = this.get('model');
-        let lines = dialog.get('lines');
-        let linesCount = lines.get("length");
+    createNewDialogLine: function(output, point){
+        const store = this.get('store');
+        const dialog = this.get('model');
+        const lines = dialog.get('lines');
+        const linesCount = lines.get("length");
 
-        let input = store.createRecord('input', {
+        const input = store.createRecord('input', {
           id : "line" + (linesCount+2) + "input" + 0,
           x: point.x,
-          y: point.y,
-
-          output: output,
+          y: point.y
         });
 
+        const connection = store.createRecord('connection', {
+          input: input,
+          output: output
+        });
 
-        let dialogLine = store.createRecord('dialog-line', {
+        input.set("connection", connection);
+        output.set("connection", connection);
+
+        const dialogLine = store.createRecord('dialog-line', {
           id : linesCount+2,
           message : `I'm a new dialog line. Change me to something meaningfull :)`,
           x: point.x - 27,
@@ -45,11 +50,6 @@ export default Ember.Controller.extend({
         input.set('belongsTo', dialogLine);
 
         dialog.get('lines').pushObject(dialogLine);
-
-      //  dialogLine.save();
-
-        //dialog.save();
-        //
     },
 
 

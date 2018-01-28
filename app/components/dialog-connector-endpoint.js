@@ -5,7 +5,7 @@ export default Ember.Component.extend({
 
   mouseMoveListener: null,
   mouseUpListener : null,
-
+/*
   mouseDown: function(e){
     e.stopPropagation();
 
@@ -18,31 +18,19 @@ export default Ember.Component.extend({
       self.mouseUp(e);
     })
 
+console.log("F");
     document.addEventListener('mousemove', this.get('mouseMoveListener'));
     document.addEventListener('mouseup', this.get('mouseUpListener'))
   },
 
   mouseMove: function(e){
+    console.log("F");
     this.get('connectionReroute')(e.clientX, e.clientY);
-    /*
-    if(this.get('moveStart')){
-      this.set('customLayouted', true);
-
-      let x = this.getScaledCoordinate(e.clientX - this.get('mouseOffsetX'));
-      let y = this.getScaledCoordinate(e.clientY - this.get('mouseOffsetY'));
-
-      this.set('positionX', x);
-      this.set('positionY', y);
-
-      Ember.$(this.element).css('left', x + 'px');
-      Ember.$(this.element).css('top', y + 'px');
-    }
-    */
   },
 
   mouseUp: function(){
     document.removeEventListener('mousemove', this.get('mouseMoveListener'));
     document.removeEventListener('mouseup', this.get('mouseUpListener'));
   }
+  */
 });
-8
