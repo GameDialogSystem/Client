@@ -5,16 +5,23 @@ export default Ember.Route.extend({
 
     model(params) {
         const store = this.get('store');
-        const dialog = store.findRecord('dialog', params.dialog_id)
+        const dialog = store.findRecord('dialog', params.dialog_id);
 
+        const dialogWithHistory = TimeMachine.Object.create({
+          content: dialog
+        });
 
-
-      // transform the object to a time machine object to have an undo/redo
-      // stack
-      const dialogWithHistory = TimeMachine.Object.create({
-        content: dialog
-      });
-
-      return dialogWithHistory;
+        return dialog;
     },
+
+
+    actions: {
+      loading(transition, originRoute) {
+        let controller = this.controllerFor('dialogs.edit');
+        controller.set('currentlyLoading', true);
+        console.log("LOADING");
+
+        return true; // allows the loading template to be shown
+      }
+    }
 });

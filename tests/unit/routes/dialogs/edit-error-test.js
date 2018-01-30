@@ -1,6 +1,6 @@
 import { moduleFor, test } from 'ember-qunit';
 
-moduleFor('route:dialog/new', 'Unit | Route | dialog/new', {
+moduleFor('route:dialogs/edit-error', 'Unit | Route | dialogs/edit error', {
   // Specify the other units that are required for this test.
   // needs: ['controller:foo']
 });

@@ -1,6 +1,5 @@
 import DS from 'ember-data';
 import FlowBlockModel from 'flow-logic/models/block';
-import { computed } from '@ember/object';
 
 export default FlowBlockModel.extend({
 

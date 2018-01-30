@@ -14,11 +14,6 @@ Router.map(function() {
   });
   this.route('options');
   this.route('about');
-  this.route('dialog', function() {
-    this.route('new');
-    this.route('edit');
-    this.route('delete');
-  });
   this.route('character', function() {
     this.route('new');
     this.route('edit');

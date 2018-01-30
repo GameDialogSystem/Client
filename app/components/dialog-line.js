@@ -20,7 +20,7 @@ export default FlowElement.extend({
     // create an empty output connector to allow the creation of new connections
     let output = this.get("store").createRecord('output', {
       id: `line${this.get("model.id")}output${outputs.get("length")}`,
-      belongsTo: this.get("model.content"),
+      belongsTo: this.get("model"),
     });
 
     // add the empty output connector to the dialog line

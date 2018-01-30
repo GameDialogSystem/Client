@@ -47,9 +47,24 @@ export default Ember.Controller.extend({
           ]
         });
 
+        // create an empty output connector to allow the creation of new connections
+        let newOutput = this.get("store").createRecord('output', {
+          id: `line${this.get("model.id")}output${Math.floor((Math.random() * 1000) + 1)}`,
+          belongsTo: dialogLine,
+        });
+
+        // add the blank output to allow the connection of grandchildren
+        dialogLine.get("outputs").pushObject(newOutput);
         input.set('belongsTo', dialogLine);
 
         dialog.get('lines').pushObject(dialogLine);
+
+
+        const self = this;
+        setTimeout(function(){
+          self.send("automaticallyRelocateLines", dialog.get("startingLine"));
+        }, 100)
+
     },
 
 
