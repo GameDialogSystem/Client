@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
 export default Ember.Component.extend({
-  tagName: 'md-appbar',
+  tagName: 'paper-appbar-tab-content-group',
 
-  selectedTab: 'start'
+
 });

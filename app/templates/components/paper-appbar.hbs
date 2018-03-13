@@ -1,3 +1,4 @@
+
 <md-appbar-tabbar>
   {{paper-icon "cloud_queue" size=24}}
   {{#paper-tabs
@@ -10,17 +11,78 @@
     {{yield (hash
       tab=(component "paper-appbar-tab" tabs=tabs)
     )}}
-  {{/paper-tabs}}
 
+    {{#from-elsewhere name="tabs" as |c|}}
+      {{#each c.tabs as |tab|}}
+        {{#tabs.tab value=tab.value}}
+          {{tab.label}}
+        {{/tabs.tab}}
+      {{/each}}
+    {{/from-elsewhere}}
+  {{/paper-tabs}}
   <h1>{{title}}</h1>
 </md-appbar-tabbar>
 
 
 
 {{#liquid-bind (hash tab=selectedTab) class="md-padding" as |current|}}
+  {{#from-elsewhere name="tabs-content" as |tabsContent|}}
+    {{#each tabsContent.tabs as |tab|}}
+      {{#paper-appbar-tab-content value=tab.value selectedTab=current.tab}}
+      {{#each tab.groups as |group|}}
+        {{#paper-appbar-tab-content-group label=group.label}}
+          {{#each group.buttons as |button|}}
+            {{paper-appbar-button icon=button.icon tooltip=button.tooltip}}
+          {{/each}}
+        {{/paper-appbar-tab-content-group}}
+      {{/each}}
+      {{/paper-appbar-tab-content}}
+    {{/each}}
+  {{/from-elsewhere}}
 
     {{yield (hash
-      tabContent=(component "paper-appbar-tab-content" selectedTab=current.tab)
+      tabContent=(component "paper-appbar-tab-content" selectedTab=current.tab )
     )}}
-
 {{/liquid-bind}}
+
+
+{{!--
+<md-appbar-tabbar>
+  {{paper-icon "cloud_queue" size=24}}
+  {{#paper-tabs
+    center=center
+    stretch=stretch
+    borderBottom=borderBottom
+    selected=selectedTab
+    onChange=(action (mut selectedTab)) as |tabsContainer|}}
+
+    {{#each tabs as |tab|}}
+      {{#tabsContainer.tab value=tab.value}}
+        {{tab.label}}
+      {{/tabsContainer.tab}}
+    {{/each}}
+
+
+  {{/paper-tabs}}
+
+  {{#paper-button
+    primary=true raised=true disabled=(not (and newTitle newContent))
+    onClick=(action "addChapter")}}
+    Add chapter
+  {{/paper-button}}
+
+  <h1>{{title}}</h1>
+</md-appbar-tabbar>
+
+{{#liquid-bind (hash tab=selectedTab) class="md-padding" as |current|}}
+  {{#each tabs as |otab|}}
+
+    {{#paper-appbar-tab-content selectedTab=current.tab value=otab.value}}
+      {{#each otab.groups as |group|}}
+        {{paper-appbar-tab-content-group group=group}}
+      {{/each}}
+    {{/paper-appbar-tab-content}}
+
+  {{/each}}
+{{/liquid-bind}}
+--}}

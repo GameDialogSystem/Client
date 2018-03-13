@@ -1,7 +1,11 @@
 import Ember from 'ember';
 import TimeMachine from 'ember-time-machine';
 
+import EmberObject from '@ember/object';
+
+
 export default Ember.Route.extend({
+
 
     model(params) {
         const store = this.get('store');
@@ -14,12 +18,10 @@ export default Ember.Route.extend({
         return dialog;
     },
 
-
     actions: {
       loading(transition, originRoute) {
         let controller = this.controllerFor('dialogs.edit');
         controller.set('currentlyLoading', true);
-        console.log("LOADING");
 
         return true; // allows the loading template to be shown
       }

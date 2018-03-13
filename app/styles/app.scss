@@ -2,6 +2,8 @@
 @import 'ember-paper';
 @import 'flow-logic';
 
+
+
 // all elements of the application are inserted into this container
 .gs-application{
   width: 100%;
@@ -26,6 +28,7 @@
     overflow: scroll;
   }
 }
+
 
 md-appbar{
   background: #01579B;
@@ -90,176 +93,59 @@ md-appbar{
   .md-padding{
     background: #F5F5F5;
     padding: 0;
+
+    height: 80px;
+
+    .liquid-child{
+      height: 100%;
+
+      md-appbar-tab-content{
+        float:left;
+        height: 100%;
+
+        .md-toolbar-tools {
+          margin-top: 8px;
+
+          paper-appbar-tab-content-group{
+            height: 100%;
+            border-right: solid 1px #E0E0E0;
+            min-width: 84px;
+            text-align: center;
+
+            label{
+              font-size: 0.7em;
+              display: block;
+              width: 100%;
+              text-align: center;
+              padding-bottom: 0.2em;
+              color: #9E9E9E;
+            }
+          }
+        }
+      }
+    }
   }
 
   md-ink-bar{
     background: #F5F5F5 !important;
-    visibility: collapse;
+    //visibility: collapse;
   }
+
+
+
+
 }
+
+
+
 
 .ember-text-area{
   border: none;
 }
 
-.gs-options-container{
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-
-  background-color: color($color-grey, '50');
-}
-
-.gs-options{
-  height: 100%;
-
-  .md-toolbar-tools{
-      background-color: color($color-grey, '200');
-      color: color($color-grey, '800');
-  }
-  .paper-icon{
-    color: color($color-grey, '800') !important;
-  }
-}
-
-.gs-item-container{
-  display: flex;
-  flex-wrap: wrap;
-
-  > div{
-    width: 20%;
-
-    md-card-title{
-      background: url("fire.jpg");
-      background-position: center center;
-      min-height: 150px;
-
-      color: white;
-
-      > a{
-        color: white;
-        text-decoration: none;
-      }
-    }
-  }
-}
 
 
 
-.flex-50{
-  textarea{
-    width: 100%;
-    height: 100%;
-  }
-}
-
-.flex-100{
-  margin-top: 0.5em;
-
-  button{
-    float: right;
-  }
-}
-
-
-/**
-  Dialog Line
-*/
-$size : 30px;
-$margin : 2px;
-
-.gs-answer-container{
-  position: absolute;
-  height: $size;
-  right: $margin * 2;
-  bottom : $margin * 2;
-  display: flex;
-
-  z-index: 99;
-}
-
-.gs-answer-circle{
-  position: relative;
-  margin: $margin;
-  width: $size - ($margin * 2);
-  height : $size - ($margin * 2);
-  border-radius: $size / 2;
-
-  background-color: #546E7A;
-
-  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
-}
-
-.gs-connection-container{
-  position: relative;
-  margin-left: $margin * 2;
-  margin-top: $margin * 2;
-  height: $size * 2;
-
-  > .gs-answer-circle{
-    background: #E0E0E0;
-  }
-}
-
-@for $i from 0 to 6 {
-  .gs-answer-container{
-
-    .gs-answer-circle:nth-child(#{$i}){
-      div::after {
-          position: absolute;
-          border-right: 2px solid #EEEEEE;
-          border-top: 2px solid #EEEEEE;
-          border-top-right-radius: $size / 6;
-          z-index: 0;
-
-          width: $size+$i*30;
-
-          height: #{$i*50-5 - 30}px;
-          right: $size / 2-4;
-          bottom: $size - 4;
-          content: '';
-      }
-    }
-  }
-}
-
-
-$keys: '#F44336' '#9C27B0' '#3F51B5' '#4CAF50' '#CDDC39' '#FFC107' '#FF5722' '#9E9E9E';
-md-list{
-  @for $i from 2 to 9 {
-    $value : #{34+(($i)-2) * 30}px;
-    md-list-item:nth-child(#{$i}){
-      width: calc(100% - #{$value});
-    }
-  }
-}
-
-.drag-box{
-  position: absolute;
-  width: 150px;
-  height: 150px;
-  background: #F5F5F5;
-  z-index: 999;
-
-  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
-
-  > md-card, > div{
-    visibility: collapse;
-  }
-}
-
-gs-item-movable{
-  position: absolute;
-
-  z-index: 999;
-
-  box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 2px 1px -1px rgba(0, 0, 0, 0.12);
-
-  > md-card{
-    margin: 0;
-  }
-}
 
 
 
@@ -268,9 +154,7 @@ svg{
   z-index: 0;
 }
 
-md-card{
-  background-color: rgba(255, 255, 255, 0.5);
-}
+
 
 /**
 
@@ -302,5 +186,12 @@ body{
     width: 100%;
     height: 100vh;
     overflow: hidden;
+  }
+}
+
+dialog-line-container{
+  textarea {
+    width: 100%;
+    height: 100%;
   }
 }

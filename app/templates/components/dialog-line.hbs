@@ -12,11 +12,11 @@
 
 <div>
   <flow-content>
-  <!--
+
     <div class="actor">
       {{paper-icon "person" size=48}}
     </div>
-  -->
+
     <div class="message">
       {{textarea autoresize=true
                  cols=40
@@ -24,6 +24,10 @@
                  max-rows=10
                  value=(mut model.message)
      }}
+
+     {{#paper-button iconButton=true onClick=(action "elementEdit")}}
+        {{paper-icon "edit"}}
+     {{/paper-button}}
     </div>
   </flow-content>
 </div>
@@ -35,7 +39,7 @@
         scrollOffsetY=scrollOffsetY
         parent=(mut model)
         model=output
-        reroute=reroute
+        onReroute=onReroute
         connectToNewBlock=(action "connectToNewBlock")}}
   {{/each}}
 </flow-output-container>

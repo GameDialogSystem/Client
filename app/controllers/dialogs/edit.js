@@ -4,7 +4,38 @@ export default Ember.Controller.extend({
   isShowingOptions: false,
   answerToBeEdited : null,
 
+  tabs: [
+    {
+      label: "Cry",
+      value: "cry",
+
+      groups : [
+        {
+          label: "Slug",
+
+          buttons: [
+            {
+              icon: "cake",
+              tooltip: "Cake"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+
+
+
   actions : {
+      undo(){
+        alert("undo");
+      },
+
+      redo(){
+        alert("redo");
+      },
+
+
     rerouteToIndex(){
       this.transitionToRoute('index');
     },
@@ -110,6 +141,10 @@ export default Ember.Controller.extend({
         // ...after the record has loaded
         line.save();
       });
+    },
+
+    editDialogLine(id) {
+      this.transitionToRoute('dialogs.line.edit', id);
     },
 
     connectionReroute: function(){

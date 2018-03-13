@@ -61,5 +61,9 @@ export default FlowElement.extend({
         this.addEmptyOutput();
       }
     },
+
+    elementEdit: function(){
+      this.get('onElementEdit')();      
+    }
   }
 });

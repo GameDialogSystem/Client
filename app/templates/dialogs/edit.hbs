@@ -1,158 +1,106 @@
-{{#paper-appbar title=model.name as |appbar|}}
+{{to-elsewhere named="tabs" send=(hash tabs=tabs) }}
+{{to-elsewhere named="tabs-content" send=(hash tabs=tabs) }}
 
-  {{appbar.tab label="Start" value="foo"}}
-  {{appbar.tab label="View" value="bar"}}
-  {{appbar.tab label="Dialog Line" value="blub"}}
-  {{appbar.tab label="Dialog Line" value="planet"}}
-  {{appbar.tab label="Dialog Line" value="coaster"}}
 
-  {{#appbar.tabContent value="foo"}}
-    {{#paper-toolbar-tools}}
-      {{! Load dialog button}}
-      {{#paper-button iconButton=true}}
-        {{paper-icon "file_download"}}
+{{!--
+{{to-elsewhere named="tab-content-line"
+               send=(hash body=(component "paper-button") onOutsideClick=(action "mauz"))}}
+--}}
 
-        {{#paper-tooltip position="bottom"}}
-          Open Dialog
-        {{/paper-tooltip}}
-      {{/paper-button}}
+{{!--
+{{#ember-wormhole to="tab-content-line"}}
+  {{#paper-button iconButton=true}}
+    {{paper-icon "translate"}}
 
-      {{! Save dialog button}}
-      {{#paper-button iconButton=true onClick=(action "saveDialog")}}
-        {{paper-icon "file_upload"}}
+    {{#paper-tooltip position="bottom"}}
+      Translations
+    {{/paper-tooltip}}
+  {{/paper-button}}
 
-        {{#paper-tooltip position="bottom"}}
-          Save Dialog
-        {{/paper-tooltip}}
-      {{/paper-button}}
+  {{#paper-button iconButton=true}}
+    {{paper-icon "grade"}}
 
-      {{! Undo change button}}
-      {{#paper-button iconButton=true onClick=(action "undoChange")}}
-        {{paper-icon "undo"}}
+    {{#paper-tooltip position="bottom"}}
+      Set favorite
+    {{/paper-tooltip}}
+  {{/paper-button}}
 
-        {{#paper-tooltip position="bottom"}}
-          Undo Changes
-        {{/paper-tooltip}}
-      {{/paper-button}}
+  {{#paper-button iconButton=true}}
+    {{paper-icon "fingerprint"}}
 
-      {{! Redo change button}}
-      {{#paper-button iconButton=true onClick=(action "redoChange")}}
-        {{paper-icon "redo"}}
+    {{#paper-tooltip position="bottom"}}
+      Make Unique
+    {{/paper-tooltip}}
+  {{/paper-button}}
 
-        {{#paper-tooltip position="bottom"}}
-          Redo Changes
-        {{/paper-tooltip}}
-      {{/paper-button}}
+  {{#paper-button iconButton=true}}
+    {{paper-icon "label"}}
 
-      {{! Delete element button}}
-      {{#paper-button iconButton=true}}
-        {{paper-icon "delete"}}
+    {{#paper-tooltip position="bottom"}}
+      Add Labels
+    {{/paper-tooltip}}
+  {{/paper-button}}
 
-        {{#paper-tooltip position="bottom"}}
-          Delete Element
-        {{/paper-tooltip}}
-      {{/paper-button}}
+  {{#paper-button iconButton=true}}
+    {{paper-icon "record_voice_over"}}
 
-      {{! Find and replace button}}
-      {{#paper-button iconButton=true}}
-        {{paper-icon "find_replace"}}
+    {{#paper-tooltip position="bottom"}}
+      Voice Recordings
+    {{/paper-tooltip}}
+  {{/paper-button}}
 
-        {{#paper-tooltip position="bottom"}}
-          Find & replace text
-        {{/paper-tooltip}}
-      {{/paper-button}}
+  {{#paper-button iconButton=true}}
+    {{paper-icon "format_bold"}}
 
-      {{! Translate element}}
-      {{#paper-button iconButton=true}}
-        {{paper-icon "translate"}}
+    {{#paper-tooltip position="bottom"}}
+      Format Bold
+    {{/paper-tooltip}}
+  {{/paper-button}}
 
-        {{#paper-tooltip position="bottom"}}
-          Translate Text
-        {{/paper-tooltip}}
-      {{/paper-button}}
+  {{#paper-button iconButton=true}}
+    {{paper-icon "format_italic"}}
 
-      {{! Automatically locate dialog lines}}
-      {{#paper-button
-        iconButton=true
+    {{#paper-tooltip position="bottom"}}
+      Format Italic
+    {{/paper-tooltip}}
+  {{/paper-button}}
 
-        onClick=(action "automaticallyRelocateLines" model.startingLine 0)
-      }}
-        {{paper-icon "transform"}}
+  {{#paper-button iconButton=true}}
+    {{paper-icon "format_underlined"}}
 
-        {{#paper-tooltip position="bottom"}}
-          Relayout Dialog Lines
-        {{/paper-tooltip}}
-      {{/paper-button}}
-    {{/paper-toolbar-tools}}
-  {{/appbar.tabContent}}
+    {{#paper-tooltip position="bottom"}}
+      Format Underline
+    {{/paper-tooltip}}
+  {{/paper-button}}
 
-  {{#appbar.tabContent value="bar"}}
-    {{#paper-toolbar-tools}}
-      {{#paper-button iconButton=true}}
-        {{paper-icon "backup"}}
-      {{/paper-button}}
-      {{#paper-button iconButton=true}}
-        {{paper-icon "backup"}}
-      {{/paper-button}}
-    {{/paper-toolbar-tools}}
-  {{/appbar.tabContent}}
+  {{#paper-button iconButton=true}}
+    {{paper-icon "format_textdirection_l_to_r"}}
 
-  {{#appbar.tabContent value="blub"}}
-    {{#paper-toolbar-tools}}
-      {{#paper-button iconButton=true}}
-        {{paper-icon "backup"}}
-      {{/paper-button}}
-      {{#paper-button iconButton=true}}
-        {{paper-icon "backup"}}
-      {{/paper-button}}
-      {{#paper-button iconButton=true}}
-        {{paper-icon "backup"}}
-      {{/paper-button}}
-    {{/paper-toolbar-tools}}
-  {{/appbar.tabContent}}
+    {{#paper-tooltip position="bottom"}}
+      Text direction left to right
+    {{/paper-tooltip}}
+  {{/paper-button}}
 
-  {{#appbar.tabContent value="planet"}}
-    {{#paper-toolbar-tools}}
-      {{#paper-button iconButton=true}}
-        {{paper-icon "backup"}}
-      {{/paper-button}}
-      {{#paper-button iconButton=true}}
-        {{paper-icon "backup"}}
-      {{/paper-button}}
-      {{#paper-button iconButton=true}}
-        {{paper-icon "backup"}}
-      {{/paper-button}}
-      {{#paper-button iconButton=true}}
-        {{paper-icon "backup"}}
-      {{/paper-button}}
-    {{/paper-toolbar-tools}}
-  {{/appbar.tabContent}}
+  {{#paper-button iconButton=true}}
+    {{paper-icon "format_textdirection_r_to_l"}}
 
-  {{#appbar.tabContent value="coaster"}}
-    {{#paper-toolbar-tools}}
-      {{#paper-button iconButton=true}}
-        {{paper-icon "backup"}}
-      {{/paper-button}}
-      {{#paper-button iconButton=true}}
-        {{paper-icon "backup"}}
-      {{/paper-button}}
-      {{#paper-button iconButton=true}}
-        {{paper-icon "backup"}}
-      {{/paper-button}}
-      {{#paper-button iconButton=true}}
-        {{paper-icon "backup"}}
-      {{/paper-button}}
-      {{#paper-button iconButton=true}}
-        {{paper-icon "backup"}}
-      {{/paper-button}}
-    {{/paper-toolbar-tools}}
-  {{/appbar.tabContent}}
+    {{#paper-tooltip position="bottom"}}
+      Text direction right to left
+    {{/paper-tooltip}}
+  {{/paper-button}}
 
-{{/paper-appbar}}
+  {{#paper-button iconButton=true}}
+    {{paper-icon "mood"}}
 
-<div class="gs-side-container">
-    {{flow-container
-      blocks=model.lines
-      deleteBlock=(action 'deleteBlock')
-      connectToNewBlock=(action 'createNewDialogLine')}}
-</div>
+    {{#paper-tooltip position="bottom"}}
+      Set Mood
+    {{/paper-tooltip}}
+  {{/paper-button}}
+
+{{/ember-wormhole}}
+--}}
+{{flow-container
+  blocks=model.lines
+  deleteBlock=(action 'deleteBlock')
+  onElementEdit=(action 'editDialogLine')
+  connectToNewBlock=(action 'createNewDialogLine')}}
