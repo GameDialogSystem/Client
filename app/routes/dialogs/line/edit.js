@@ -7,5 +7,5 @@ export default Ember.Route.extend({
       const line = store.findRecord('dialog-line', params.line_id);
 
       return line;
-  },
+  }
 });

@@ -1,6 +1,24 @@
+$primary: "indigo";
+$accent: "light-green";
+$warn: "pink";
+
+$primaryText: rgba(0, 0, 0, 0.87);
+$secondaryText: rgba(0, 0, 0, 0.54);
+$disabledText: rgba(0, 0, 0, 0.38);
+$dividers: rgba(0, 0, 0, 0.12);
+
 @import "color-palette";
 @import 'ember-paper';
 @import 'flow-logic';
+
+
+
+$statusBar: color('grey', '300');
+$appBar: color('grey', '100');
+$background: color('grey', '50');
+$cards: 'white';
+
+@debug $statusBar;
 
 
 
@@ -22,7 +40,6 @@
 
   .gs-side-container > div:nth-child(1) {
     position: relative;
-    background: #E0E0E0;
 
     flex: 1;
     overflow: scroll;
@@ -31,10 +48,12 @@
 
 
 md-appbar{
-  background: #01579B;
+  background: color($primary, '500');
+
 
   md-appbar-tabbar{
     display: flex;
+
 
     padding-top: 1em;
 
@@ -67,10 +86,6 @@ md-appbar{
     }
   }
 
-  md-toolbar{
-    background: #01579B !important;
-  }
-
   md-tabs{
     border-radius: 0px;
   }
@@ -80,18 +95,20 @@ md-appbar{
     border-radius: 0 !important;
   }
   .md-active{
-    background: #F5F5F5;
-    color: #01579B !important;
+    background: $appBar !important;
+    color: rgba(0, 0, 0, 0.87) !important;
   }
 
   .md-focused{
-    background: #F5F5F5 !important;
-    color: #01579B !important;
+    background: $appBar !important;
+    color: rgba(0, 0, 0, 0.87) !important;
     border: 0 !important;
   }
 
   .md-padding{
-    background: #F5F5F5;
+
+    background: $appBar;
+    border-bottom: solid 1px $dividers;
     padding: 0;
 
     height: 80px;
@@ -178,8 +195,7 @@ TEST ANIMATION FOR CONNECTIONS
 
 
 body{
-  background: #DCE775;
-  background: #E0E0E0;
+  background: $background;
 
   >div{
     position: absolute;
@@ -193,5 +209,41 @@ dialog-line-container{
   textarea {
     width: 100%;
     height: 100%;
+  }
+}
+
+
+/**
+ *
+ * Styling of the ace editor
+ */
+ #editor{
+   font-size: 20px;
+ }
+
+.md-input-custom:focus{
+  outline: 0px solid transparent;
+
+}
+
+.md-custom-input-container{
+  margin: 1em;
+  padding: 0.5em;
+  border: solid 1px $dividers;
+  transition: all ease .5s;
+
+  .md-subheader{
+      padding: 0;
+      margin: 0;
+      line-height: normal;
+
+      .md-subheader-inner{
+          padding: 0;
+      }
+  }
+
+  span.md-variable{
+    color: color($accent, '500');
+
   }
 }

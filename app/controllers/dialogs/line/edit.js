@@ -72,6 +72,15 @@ tabs: [
       }
     ]
   }
-]
+],
 
+actions: {
+  save() {
+    this.transitionToRoute('dialogs.edit', 1);
+  },
+
+  cancel() {
+    this.transitionToRoute('dialogs.edit', 1);
+  }
+}
 });
