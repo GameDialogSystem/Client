@@ -1,0 +1,20 @@
+<tr>
+  <th>Title</th>
+  <th>Organisation</th>
+  <th>Owner</th>
+  <th>Last Modified</th>
+</tr>
+
+{{#each files as |file|}}
+  {{log file}}
+
+  <tr>
+    <td>{{file.fileName}}</td>
+    <td></td>
+    <td></td>
+    <td>{{iso-date file.lastModifiedTimestamp}}</td>
+  </tr>
+{{/each}}
+
+
+{{yield}}

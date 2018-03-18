@@ -10,14 +10,18 @@
   {{/liquid-bind}}
 {{/from-elsewhere}}
 --}}
-
-{{#paper-appbar title=model.name as |appbar|}}
+{{#paper-appbar title="Hoppelhase" as |appbar|}}
 
   {{appbar.tab label="Start" value="start"}}
 
     {{#appbar.tabContent value="start"}}
 
       {{#paper-toolbar-tools}}
+        {{! Dialog loading and saving actions}}
+        {{#paper-appbar-tab-content-group label="Persistance"}}
+          {{paper-appbar-button icon="folder" tooltip="Load Dialog" onClick=(action "loadDialogFile")}}
+          {{paper-appbar-button icon="save" tooltip="Save Dialog"}}
+        {{/paper-appbar-tab-content-group}}
 
         {{! Load dialog button}}
         {{#paper-appbar-tab-content-group label="Changes"}}
@@ -35,157 +39,13 @@
       {{/paper-toolbar-tools}}
     {{/appbar.tabContent}}
 
-
-
-
-  {{!--
-  {{#appbar.tabContent value="foo"}}
-
-    {{#paper-toolbar-tools}}
-
-      {{! Load dialog button}}
-      {{#paper-button iconButton=true}}
-        {{paper-icon "file_download"}}
-
-        {{#paper-tooltip position="bottom"}}
-          Open Dialog
-        {{/paper-tooltip}}
-      {{/paper-button}}
-
-      {{! Save dialog button}}
-      {{#paper-button iconButton=true}}
-        {{paper-icon "file_upload"}}
-
-        {{#paper-tooltip position="bottom"}}
-          Save Dialog
-        {{/paper-tooltip}}
-      {{/paper-button}}
-
-      {{! Undo change button}}
-      {{#paper-button iconButton=true}}
-        {{paper-icon "undo"}}
-
-        {{#paper-tooltip position="bottom"}}
-          Undo Changes
-        {{/paper-tooltip}}
-      {{/paper-button}}
-
-      {{! Redo change button}}
-      {{#paper-button iconButton=true}}
-        {{paper-icon "redo"}}
-
-        {{#paper-tooltip position="bottom"}}
-          Redo Changes
-        {{/paper-tooltip}}
-      {{/paper-button}}
-
-      {{! Delete element button}}
-      {{#paper-button iconButton=true}}
-        {{paper-icon "delete"}}
-
-        {{#paper-tooltip position="bottom"}}
-          Delete Element
-        {{/paper-tooltip}}
-      {{/paper-button}}
-
-      {{! Find and replace button}}
-      {{#paper-button iconButton=true}}
-        {{paper-icon "find_replace"}}
-
-        {{#paper-tooltip position="bottom"}}
-          Find & replace text
-        {{/paper-tooltip}}
-      {{/paper-button}}
-
-      {{! Translate element}}
-      {{#paper-button iconButton=true}}
-        {{paper-icon "translate"}}
-
-        {{#paper-tooltip position="bottom"}}
-          Translate Text
-        {{/paper-tooltip}}
-      {{/paper-button}}
-
-      {{! Automatically locate dialog lines}}
-      {{#paper-button
-        iconButton=true
-
-        onClick=(action "automaticallyRelocateLines" model.startingLine 0)
-      }}
-        {{paper-icon "transform"}}
-
-        {{#paper-tooltip position="bottom"}}
-          Relayout Dialog Lines
-        {{/paper-tooltip}}
-      {{/paper-button}}
-    {{/paper-toolbar-tools}}
-  {{/appbar.tabContent}}
-
-  {{#appbar.tabContent value="bar"}}
-    {{#paper-toolbar-tools}}
-      {{#paper-button iconButton=true}}
-        {{paper-icon "backup"}}
-      {{/paper-button}}
-      {{#paper-button iconButton=true}}
-        {{paper-icon "backup"}}
-      {{/paper-button}}
-    {{/paper-toolbar-tools}}
-  {{/appbar.tabContent}}
-
-  {{#appbar.tabContent value="blub"}}
-    {{#paper-toolbar-tools}}
-      {{#paper-button iconButton=true}}
-        {{paper-icon "backup"}}
-      {{/paper-button}}
-      {{#paper-button iconButton=true}}
-        {{paper-icon "backup"}}
-      {{/paper-button}}
-      {{#paper-button iconButton=true}}
-        {{paper-icon "backup"}}
-      {{/paper-button}}
-    {{/paper-toolbar-tools}}
-  {{/appbar.tabContent}}
-
-  {{#appbar.tabContent value="planet"}}
-    {{#paper-toolbar-tools}}
-      {{#paper-button iconButton=true}}
-        {{paper-icon "backup"}}
-      {{/paper-button}}
-      {{#paper-button iconButton=true}}
-        {{paper-icon "backup"}}
-      {{/paper-button}}
-      {{#paper-button iconButton=true}}
-        {{paper-icon "backup"}}
-      {{/paper-button}}
-      {{#paper-button iconButton=true}}
-        {{paper-icon "backup"}}
-      {{/paper-button}}
-    {{/paper-toolbar-tools}}
-  {{/appbar.tabContent}}
-
-  {{#appbar.tabContent value="coaster"}}
-    {{#paper-toolbar-tools}}
-      {{#paper-button iconButton=true}}
-        {{paper-icon "backup"}}
-      {{/paper-button}}
-      {{#paper-button iconButton=true}}
-        {{paper-icon "backup"}}
-      {{/paper-button}}
-      {{#paper-button iconButton=true}}
-        {{paper-icon "backup"}}
-      {{/paper-button}}
-      {{#paper-button iconButton=true}}
-        {{paper-icon "backup"}}
-      {{/paper-button}}
-      {{#paper-button iconButton=true}}
-        {{paper-icon "backup"}}
-      {{/paper-button}}
-    {{/paper-toolbar-tools}}
-
-  {{/appbar.tabContent}}
-  --}}
 {{/paper-appbar}}
 
 <div class="gs-side-container">
     {{outlet}}
 </div>
+
+{{file-dialog host=host onCloseDialog=(action "closeDialog")}}
+{{#if showLoadingDialog}}
+  {{file-dialog host=host onCloseDialog=(action "closeDialog")}}
+{{/if}}

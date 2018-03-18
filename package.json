@@ -38,7 +38,7 @@
     "ember-cli-shims": "^1.1.0",
     "ember-cli-sri": "^2.1.0",
     "ember-cli-uglify": "^1.2.0",
-    "ember-concurrency": "^0.8.10",
+    "ember-concurrency": "^0.8.16",
     "ember-data": "~2.15.0",
     "ember-electron": "^2.6.0",
     "ember-elsewhere": "^1.0.4",
@@ -59,11 +59,16 @@
     "node": "^4.5 || 6.* || >= 7.*"
   },
   "dependencies": {
+    "broccoli-funnel": "^2.0.1",
+    "countries-list": "^2.3.1",
     "electron-compile": "^6.4.2",
     "electron-squirrel-startup": "^1.0.0",
     "flag-icon-css": "^3.0.0",
     "franc": "^3.1.1",
+    "i18n-iso-countries": "^3.6.1",
+    "iso-639-1": "^2.0.3",
     "jquery-ui": "^1.12.1",
+    "langs": "^2.0.0",
     "perfect-scrollbar": "^1.3.0"
   }
 }

@@ -1,4 +1,4 @@
 {{to-elsewhere named="tabs" send=(hash tabs=tabs) }}
 {{to-elsewhere named="tabs-content" send=(hash tabs=tabs) }}
 
-{{variable-editor value=(mut model.message) onCancel=(action "cancel") onSave=(action "save")}}
+{{variable-editor value=model.message onCancel=(action "cancel") onSave=(action "save")}}

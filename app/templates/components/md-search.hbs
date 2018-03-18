@@ -1,0 +1,4 @@
+{{#liquid-if showSearch class="vehicles"}}
+  {{paper-input class="flex-30" value=value onChange=(action (mut value))}}
+{{/liquid-if}}
+{{#paper-button iconButton=true onClick=(action "toggleSearch")}}{{paper-icon icon="search"}}{{/paper-button}}

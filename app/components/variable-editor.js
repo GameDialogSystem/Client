@@ -1,4 +1,6 @@
 import Ember from 'ember';
+import franc from 'npm:franc';
+import Langs from 'npm:langs';
 
 export default Ember.Component.extend({
   lastValue : '',
@@ -7,13 +9,27 @@ export default Ember.Component.extend({
 
   variables: [],
 
+  wordCount: 10,
+
+
+  localLanguageName: Ember.computed('language', 'wordCount', function() {
+    const language = this.get('language');
+    const languageObject = Langs.where("2", language);
+    if(language === ''){
+      return `Type ${10-this.get('wordCount')} more words to autodetect used language`;
+    }
+    if(languageObject === undefined){
+      return "";
+    }
+
+    console.log(languageObject);
+    return languageObject.local;
+  }),
 
   getCaretPosition: function() {
     if (window.getSelection && window.getSelection().getRangeAt && window.getSelection().rangeCount > 0) {
       const range = window.getSelection().getRangeAt(0);
       const selection = window.getSelection();
-
-
 
       var selectedObj = window.getSelection();
       var rangeCount = 0;
@@ -39,7 +55,8 @@ export default Ember.Component.extend({
   },
 
   setCaretPosition: function(position){
-    var element = Ember.$("div [contenteditable=true]")[0];
+    var element = Ember.$(this.element).find("div [contenteditable=true]")[0];
+
     var range = document.createRange();
     var selection = window.getSelection();
 
@@ -76,22 +93,56 @@ export default Ember.Component.extend({
     }
   },
 
-  setWordCount: function(){
-    this.set('wordCount', Ember.$("div [contenteditable=true]")[0].innerHTML.split(" ").length);
+  setWordCountFromText: function(text){
+    const length = text.split(" ").length;
+
+    this.set('wordCount', length);
   },
+
+  setLanguageFromText(text) {
+    if(text.split(" ").length >= 10){
+      this.set('language', franc(text));
+
+      if(this.get('language') === ""){
+        this.set('language', "Unknown Language");
+      }
+    }else{
+      this.set('language', '');
+    }
+  },
+
+  valueChanged: Ember.observer('tempValue', function() {
+    const tempValue = this.get('tempValue');
+
+    this.setLanguageFromText(tempValue);
+    this.setWordCountFromText(tempValue);
+  }),
+
+
+  didReceiveAttrs() {
+    this._super(...arguments);
+
+    this.set('tempValue', this.get('value'));
+    const tempValue = this.get('tempValue');
+
+    this.setLanguageFromText(tempValue);
+    this.setWordCountFromText(tempValue);
+  },
+
+
+
 
   didInsertElement() {
     this._super(...arguments);
 
     const self = this;
-    this.setWordCount();
 
-    $("div [contenteditable=true]").bind("DOMSubtreeModified",function(){
-      self.setWordCount();
+    const element = Ember.$(this.element).find("div [contenteditable=true]");
+    element.bind("DOMSubtreeModified", function(){
+      self.set('tempValue', this.innerHTML);
     });
-    $("div [contenteditable=true]").bind('blur keyup paste copy cut', function() {
-      const element = Ember.$("div [contenteditable=true]")[0];
-      const childNodes = element.childNodes;
+    element.bind('blur keyup paste copy cut', function() {
+      const childNodes = element[0].childNodes;
 
       // save current caret position in order to reset it after
       // inserting the bold elements for variable highlighting
@@ -140,7 +191,8 @@ export default Ember.Component.extend({
 
   actions: {
     onSave(){
-      this.get("onSave")();
+      this.set('value', this.get('tempValue'));
+      this.get("onSave")(this.get('tempValue'));
     },
 
     onCancel(){

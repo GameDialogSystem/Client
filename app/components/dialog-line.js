@@ -55,7 +55,7 @@ export default FlowElement.extend({
      * the new block should be inserted
      */
     connectToNewBlock: function(output, point){
-      let connectToNewBlock = this.get('connectToNewBlock');
+      let connectToNewBlock = this.get('onConnectToNewBlock');
       if(connectToNewBlock !== null || connectToNewBlock !== undefined){
         connectToNewBlock(output, point);
         this.addEmptyOutput();
@@ -63,7 +63,7 @@ export default FlowElement.extend({
     },
 
     elementEdit: function(){
-      this.get('onElementEdit')();      
+      this.get('onElementEdit')();
     }
   }
 });

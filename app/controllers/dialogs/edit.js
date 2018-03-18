@@ -35,7 +35,6 @@ export default Ember.Controller.extend({
         alert("redo");
       },
 
-
     rerouteToIndex(){
       this.transitionToRoute('index');
     },
@@ -60,6 +59,7 @@ export default Ember.Controller.extend({
         });
 
         const connection = store.createRecord('connection', {
+          id: Date.now(),
           input: input,
           output: output
         });
@@ -125,8 +125,21 @@ export default Ember.Controller.extend({
     },
 
     deleteBlock(block){
+      const self = this;
       block.get('inputs').forEach(function(input){
+        input.get("connection").then((connection) => {
+            connection.get('output').then((output) => {
+              output.destroyRecord();
+            })
+
+          connection.destroyRecord();
+        })
+
         input.destroyRecord();
+      })
+
+      block.get('outputs').forEach(function(output){
+        output.destroyRecord();
       })
       block.destroyRecord();
     },

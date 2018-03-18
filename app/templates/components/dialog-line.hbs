@@ -10,27 +10,19 @@
     {{/each}}
 </flow-input-container>
 
-<div>
   <flow-content>
-
     <div class="actor">
       {{paper-icon "person" size=48}}
     </div>
-
     <div class="message">
-      {{textarea autoresize=true
-                 cols=40
-                 rows=displayedRows
-                 max-rows=10
-                 value=(mut model.message)
-     }}
-
-     {{#paper-button iconButton=true onClick=(action "elementEdit")}}
-        {{paper-icon "edit"}}
-     {{/paper-button}}
+      <span>{{prune model.message 50}}</span>
+    </div>
+    <div class="action">
+      {{#paper-button iconButton=true onClick=(action "elementEdit")}}
+         {{paper-icon "edit"}}
+      {{/paper-button}}
     </div>
   </flow-content>
-</div>
 
 <flow-output-container>
   {{#each model.outputs as |output|}}
