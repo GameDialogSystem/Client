@@ -1,0 +1,8 @@
+{{#each files as |file|}}
+    <div class="icon transition" {{action "onFileSelect" file}}>
+      <div>
+        {{paper-icon "insert-drive-file" size=48}}
+        <span>{{file.fileName}}</span>
+      </div>
+    </div>
+{{/each}}

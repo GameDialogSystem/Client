@@ -4,8 +4,8 @@ export default Ember.Component.extend({
   tagName: '',
 
   actions: {
-    onClick: function(){
-      this.get("onClick")();
+    onFileSelect(file) {
+      this.get('onFileSelect')(file);
     }
   }
 });

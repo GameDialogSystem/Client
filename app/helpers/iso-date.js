@@ -3,8 +3,6 @@ import Ember from 'ember';
 export function isoDate(params/*, hash*/) {
   const date = new Date(params[0]);
 
-  const time = date.getTime();
-
   const year = date.getFullYear();
   let month = date.getMonth() + 1;
   month = (month < 10) ? '0' + month : month;

@@ -1,16 +1,38 @@
 <tr>
-  <th>Title</th>
-  <th>Organisation</th>
-  <th>Owner</th>
-  <th>Last Modified</th>
+  <th>
+    <a href="#sort=file" {{action "sort" "title"}}>
+      {{#liquid-if (eq sortColumn "title")}}
+        {{paper-icon "arrow-downward" class=sortOrder size=18}}
+      {{/liquid-if}}Title
+    </a>
+  </th>
+  <th>
+    <a href="#sort=file" {{action "sort" "extension"}}>
+      {{#liquid-if (eq sortColumn "extension")}}
+        {{paper-icon "arrow-downward" class=sortOrder size=18}}
+      {{/liquid-if}}Extension
+    </a>
+  </th>
+  <th>
+    <a href="#sort=file" {{action "sort" "owner"}}>
+      {{#liquid-if (eq sortColumn "owner")}}
+        {{paper-icon "arrow-downward" class=sortOrder size=18}}
+      {{/liquid-if}}Owner
+    </a>
+  </th>
+  <th>
+    <a href="#sort=last_modified" {{action "sort" "last modified"}}>
+      {{#liquid-if (eq sortColumn "last modified")}}
+        {{paper-icon "arrow-downward" class=sortOrder size=18}}
+      {{/liquid-if}}Last Modified
+    </a>
+  </th>
 </tr>
 
-{{#each files as |file|}}
-  {{log file}}
-
-  <tr>
+{{#each sortedFiles as |file|}}
+  <tr {{action "onFileSelect" file}}>
     <td>{{file.fileName}}</td>
-    <td></td>
+    <td>{{file.extension}}</td>
     <td></td>
     <td>{{iso-date file.lastModifiedTimestamp}}</td>
   </tr>

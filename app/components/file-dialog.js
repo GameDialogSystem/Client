@@ -1,6 +1,6 @@
 import Ember from 'ember';
-import {task, enqueue, maxConcurrency, timeout} from 'ember-concurrency';
 
+import { Promise } from '@ember';
 
 export default Ember.Component.extend({
   tagName: '',
@@ -11,9 +11,13 @@ export default Ember.Component.extend({
 
   viewType: 'list',
 
+  withoutFilesAndFolders: Ember.computed('filteredFiles', 'directories', function() {
+    return this.get('filteredFiles.length') === 0 && this.get('directories.length') === 0;
+  }),
+
   filteredFiles: Ember.computed('files', 'search', function(){
     let files = this.get('files');
-    let search = this.get('search').replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
+    let search = this.get('search').replace(/[-[\]/{}()*+?.\\^$|]/g, "\\$&");
 
     if(files === undefined) {
       return [];
@@ -43,8 +47,8 @@ export default Ember.Component.extend({
   getJSON(url) {
     const self = this;
     return new Promise((resolve, reject) => {
-      let xhr = new XMLHttpRequest();
 
+      let xhr = new XMLHttpRequest();
       xhr.open('GET', self.get('host') + '/io/' + url.replace('/', '+'));
       xhr.onreadystatechange = handler;
       xhr.responseType = 'json';
@@ -59,7 +63,7 @@ export default Ember.Component.extend({
             reject(new Error('getJSON: `' + url + '` failed with status: [' + this.status + ']'));
           }
         }
-      };
+      }
     });
   },
 
@@ -103,8 +107,9 @@ export default Ember.Component.extend({
       this.get("onCloseDialog")();
     },
 
-    filter(){
-      console.log(this.get('search'));
+    onFileSelect(file) {
+      this.get("onCloseDialog")();
+      this.get('onFileSelect')(file);
     },
 
     view(type) {
@@ -121,8 +126,9 @@ export default Ember.Component.extend({
     getFilesFromFragment(index){
       const directory = this.get('currentDirectory');
 
-      if(index === "Home"){
-        this.set('directory', directory.slice(0, index+1).join('+').replace(/\+\|\+/g, '+'));
+      if(index !== 0){
+        const slicedDirectory = directory.slice(1, index+1).join('+').replace(/\+\|\+/g, '+');
+        this.set('directory', slicedDirectory.replace('|+', ''));
       }else{
         this.set('directory', 'null');
       }

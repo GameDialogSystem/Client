@@ -1,8 +1,35 @@
 {{to-elsewhere named="tabs" send=(hash tabs=tabs) }}
 {{to-elsewhere named="tabs-content" send=(hash tabs=tabs) }}
 
+
 {{flow-container
   blocks=model.lines
   onDeleteBlock=(action 'deleteBlock')
   onElementEdit=(action 'editDialogLine')
   onConnectToNewBlock=(action 'createNewDialogLine')}}
+
+
+  {{#if showLineEditDialog}}
+  {{#paper-dialog class="flex-50" origin=dialogOrigin}}
+      <form>
+        {{#paper-toolbar}}
+          {{#paper-toolbar-tools}}
+            {{paper-icon "mode-edit"}}
+            <h2>Edit Dialog Line</h2>
+            <span class="flex"></span>
+            {{#paper-button iconButton=true}}{{paper-icon icon="close"}}{{/paper-button}}
+          {{/paper-toolbar-tools}}
+        {{/paper-toolbar}}
+
+        {{#paper-dialog-content}}
+            {{variable-editor value=model.message}}
+        {{/paper-dialog-content}}
+
+        {{#paper-dialog-actions class="layout-row"}}
+          <span class="flex"></span>
+          {{#paper-button}}Cancel{{/paper-button}}
+          {{#paper-button}}OK{{/paper-button}}
+        {{/paper-dialog-actions}}
+      </form>
+    {{/paper-dialog}}
+  {{/if}}

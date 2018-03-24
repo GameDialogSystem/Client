@@ -29,7 +29,6 @@ export default Ember.Component.extend({
   getCaretPosition: function() {
     if (window.getSelection && window.getSelection().getRangeAt && window.getSelection().rangeCount > 0) {
       const range = window.getSelection().getRangeAt(0);
-      const selection = window.getSelection();
 
       var selectedObj = window.getSelection();
       var rangeCount = 0;

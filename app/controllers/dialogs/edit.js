@@ -4,37 +4,7 @@ export default Ember.Controller.extend({
   isShowingOptions: false,
   answerToBeEdited : null,
 
-  tabs: [
-    {
-      label: "Cry",
-      value: "cry",
-
-      groups : [
-        {
-          label: "Slug",
-
-          buttons: [
-            {
-              icon: "cake",
-              tooltip: "Cake"
-            }
-          ]
-        }
-      ]
-    }
-  ],
-
-
-
   actions : {
-      undo(){
-        alert("undo");
-      },
-
-      redo(){
-        alert("redo");
-      },
-
     rerouteToIndex(){
       this.transitionToRoute('index');
     },
@@ -125,7 +95,6 @@ export default Ember.Controller.extend({
     },
 
     deleteBlock(block){
-      const self = this;
       block.get('inputs').forEach(function(input){
         input.get("connection").then((connection) => {
             connection.get('output').then((output) => {
@@ -157,7 +126,13 @@ export default Ember.Controller.extend({
     },
 
     editDialogLine(id) {
-      this.transitionToRoute('dialogs.line.edit', id);
+      //this.set('showLineEditDialog', true);
+      this.get('store').findRecord('dialog-line', id)
+      .then((result) => {
+        this.transitionToRoute('dialogs.line.edit', id);
+        //console.log();
+      })
+      //
     },
 
     connectionReroute: function(){

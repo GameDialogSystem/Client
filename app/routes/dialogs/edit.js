@@ -1,8 +1,4 @@
 import Ember from 'ember';
-import TimeMachine from 'ember-time-machine';
-
-import EmberObject from '@ember/object';
-
 
 export default Ember.Route.extend({
 
@@ -11,15 +7,22 @@ export default Ember.Route.extend({
         const store = this.get('store');
         const dialog = store.findRecord('dialog', params.dialog_id);
 
-        const dialogWithHistory = TimeMachine.Object.create({
-          content: dialog
-        });
-
         return dialog;
     },
 
     actions: {
-      loading(transition, originRoute) {
+      error(error) {
+        if (error.status === '403') {
+          this.replaceWith('login');
+        } else {
+          console.log("This is a stupid errooooor");
+          // Let the route above this handle the error.
+          return true;
+        }
+      },
+
+
+      loading() {
         let controller = this.controllerFor('dialogs.edit');
         controller.set('currentlyLoading', true);
 

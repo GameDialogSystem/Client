@@ -18,11 +18,6 @@ Router.map(function() {
 
   this.route('options');
   this.route('about');
-  this.route('character', function() {
-    this.route('new');
-    this.route('edit');
-    this.route('delete');
-  });
 });
 
 export default Router;
