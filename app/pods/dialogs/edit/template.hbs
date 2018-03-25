@@ -1,0 +1,13 @@
+{{to-elsewhere named="tabs" send=(hash tabs=tabs) }}
+{{to-elsewhere named="tabs-content" send=(hash tabs=tabs) }}
+
+
+{{flow-container
+  blocks=model.lines
+  onDeleteBlock=(action 'deleteBlock')
+  onElementEdit=(action 'editDialogLine')
+  onConnectToNewBlock=(action 'createNewDialogLine')}}
+
+{{#if showLineEditDialog}}
+  {{dialogline-dialog model=dialogLine dialogFlag=(mut showLineEditDialog)}}
+{{/if}}

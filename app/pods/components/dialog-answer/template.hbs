@@ -1,0 +1,33 @@
+{{#paper-form as |form|}}
+<div class="layout-column flex">
+  <div class="flex">
+    <div class="layout-row">
+      <div class="flex-50">
+        {{#paper-select
+          required=true
+          label="Requirement"
+          options=attributes
+          selected=answer.requirement
+          onChange=(action (mut answer.requirement))
+          as |requirement|
+        }}
+          {{requirement}}
+        {{/paper-select}}
+
+        {{form.input type="number" label="Value" value=answer.requirementValue onChange=(action (mut answer.requirementValue)) min=0 max=100 required=true}}
+      </div>
+
+      <div class="flex-50">
+        {{textarea value=(mut answer.response) cols="40" rows="8" key-press=(action 'updateAnswer' answer)}}
+      </div>
+    </div>
+  </div>
+  <div class="flex">
+    <div class="layout-row">
+      <div class="flex-100">
+        {{#paper-button raised=true primary=true}}Save Changes{{/paper-button}}
+      </div>
+    </div>
+  </div>
+</div>
+{{/paper-form}}

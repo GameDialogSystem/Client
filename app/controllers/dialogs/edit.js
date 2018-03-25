@@ -128,11 +128,10 @@ export default Ember.Controller.extend({
     editDialogLine(id) {
       //this.set('showLineEditDialog', true);
       this.get('store').findRecord('dialog-line', id)
-      .then((result) => {
-        this.transitionToRoute('dialogs.line.edit', id);
-        //console.log();
+      .then((line) => {
+        this.set('dialogLine', line.message);
+        this.set('showLineEditDialog', true);        
       })
-      //
     },
 
     connectionReroute: function(){

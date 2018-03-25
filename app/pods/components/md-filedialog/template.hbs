@@ -1,0 +1,111 @@
+{{#paper-dialog class="flex-77 file-dialog" onClose=(action "closeDialog" "cancel") origin=dialogOrigin}}
+<form>
+  {{#paper-toolbar}}
+    {{#paper-toolbar-tools}}
+      <h2>
+        {{#each currentDirectory as |path index|}}
+          {{#if (not (eq path currentDirectory.lastObject))}}
+            {{#if (eq path "|")}}
+              {{paper-icon "chevron-right"}}
+            {{else}}
+              <a class="darker transition" {{action "getFilesFromFragment" index}}>{{path}}</a>
+            {{/if}}
+          {{else}}
+            <span class="transition">{{path}}</span>
+          {{/if}}
+        {{/each}}
+      </h2>
+      <span class="flex"></span>
+      {{md-search value=(mut search)}}
+
+      {{#paper-menu as |menu|}}
+        {{#menu.trigger}}
+          {{#paper-button iconButton=true}}
+            {{paper-icon "view-module" size=24}}
+          {{/paper-button}}
+        {{/menu.trigger}}
+
+        {{#menu.content width=4 as |content|}}
+          {{#content.menu-item onClick=(action "view" "grid")}}
+            {{paper-icon "view-module"}}
+            <span>View As Grid</span>
+          {{/content.menu-item}}
+
+          {{#content.menu-item onClick=(action "view" "list")}}
+            {{paper-icon "view-list"}}
+            <span>View As List</span>
+          {{/content.menu-item}}
+
+          {{#content.menu-item onClick=(action "view" "column")}}
+            {{paper-icon "view-column"}}
+            <span>View In Columns</span>
+          {{/content.menu-item}}
+        {{/menu.content}}
+      {{/paper-menu}}
+    {{/paper-toolbar-tools}}
+  {{/paper-toolbar}}
+
+  {{#paper-dialog-content}}
+    {{#liquid-if withoutFilesAndFolders}}
+      <div class="information">
+        <h1>This Folder Has No Folders Or Files</h1>
+      </div>
+    {{else}}
+      {{#liquid-if isFindingDirectories}}
+        <div class="information">
+          {{paper-progress-circular}}
+          <p>Please hold on while loading your files.</p>
+        </div>
+      {{else}}
+        <div class="layout-row flex">
+          {{!-- This is the left element that shows the folders in the current directory --}}
+          <div class="flex">
+            {{!-- Show message in case there are no folders within the current directory --}}
+            {{#if (not directories)}}
+              <div class="information">
+                <h1>This Folder Has No Folders</h1>
+              </div>
+            {{else}}
+              {{!-- display folders of the current directory --}}
+              {{#paper-list}}
+                {{#each directories as |directory|}}
+                  {{#paper-item onClick=(action "getFiles" directory.fileName)}}
+                    {{paper-icon "folder"}}
+                    <span>{{directory.fileName}}</span>
+                  {{/paper-item}}
+                {{/each}}
+              {{/paper-list}}
+            {{/if}}
+          </div>
+
+          {{!-- This is the right element that shows the files in the current directory --}}
+          <div class="flex file-content">
+            {{!-- Show message in case there are no files within the current folder --}}
+            {{#if (not filteredFiles)}}
+              <div class="information">
+                <h1>This Folder Is Empty</h1>
+              </div>
+            {{else}}
+              {{!-- Show the files as a grid --}}
+              {{#if (eq viewType "grid")}}
+                  {{md-filegrid files=filteredFiles onFileSelect=(action "onFileSelect")}}
+              {{/if}}
+
+              {{!-- Show the files as a table --}}
+              {{#if (eq viewType "list")}}
+                {{md-filetable files=filteredFiles onFileSelect=(action "onFileSelect")}}
+              {{/if}}
+            {{/if}}
+          </div>
+        </div>
+      {{/liquid-if}}
+    {{/liquid-if}}
+  {{/paper-dialog-content}}
+
+    {{#paper-dialog-actions class="layout-row"}}
+      <span class="flex"></span>
+      {{#paper-button onClick=(action "closeDialog" "cancel")}}Cancel{{/paper-button}}
+      {{#paper-button onClick=(action "closeDialog" "ok")}}OK{{/paper-button}}
+    {{/paper-dialog-actions}}
+</form>
+{{/paper-dialog}}

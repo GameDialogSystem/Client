@@ -68,6 +68,14 @@ md-appbar{
       flex-grow: 2;
     }
 
+    > md-appbar-additional{
+
+
+      md-icon {
+        color: white !important;
+      }
+    }
+
     h1{
       font-size: 0.9em;
       font-weight: 500;
