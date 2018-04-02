@@ -1,0 +1,21 @@
+{{to-elsewhere named="tabs" send=(hash tabs=tabs) }}
+{{to-elsewhere named="tabs-content" send=(hash tabs=tabs) }}
+
+{{flow-container
+  blocks=model.lines
+  onDeleteBlock=(action 'deleteBlock')
+  onElementEdit=(action 'editDialogLine')
+  onConnectToNewBlock=(action 'createNewDialogLine')}}
+
+{{#if showToast}}
+  {{#paper-toast position="bottom left" duration=3000 capsule=false onClose=(action (toggle 'showToast' this)) as |toast|}}
+     {{#toast.text}}{{toastMessage}}{{/toast.text}}
+     {{#if showToastButton}}
+      {{#paper-button accent=true}}Undo{{/paper-button}}
+     {{/if}}
+   {{/paper-toast}}
+{{/if}}
+
+{{#if showLineEditDialog}}
+  {{dialogline-dialog value=dialogLine.message dialogFlag=showLineEditDialog}}
+{{/if}}

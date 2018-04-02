@@ -4,6 +4,7 @@
 module.exports = function(environment) {
   let ENV = {
     modulePrefix: 'ue-dialog',
+    podModulePrefix: 'ue-dialog/pods',
     environment,
     rootURL: '/',
     locationType: 'auto',

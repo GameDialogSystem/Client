@@ -1,0 +1,39 @@
+{{#paper-dialog class="flex-70" origin=dialogOrigin}}
+  <form>
+    {{#paper-appbar title="Hoppelhase" as |appbar|}}
+      {{appbar.tab label="Edit Dialog Line" value="start"}}
+      {{#appbar.tabContent value="start"}}
+        {{#paper-toolbar-tools}}
+
+          {{! Undo Redo Actions}}
+          {{#paper-appbar-tab-content-group label="Changes"}}
+            {{paper-appbar-button icon="undo" tooltip="Undo Changes"}}
+            {{paper-appbar-button icon="redo" tooltip="Redo Changes"}}
+          {{/paper-appbar-tab-content-group}}
+
+        {{/paper-toolbar-tools}}
+      {{/appbar.tabContent}}
+
+      {{#appbar.additional}}
+        {{#paper-button
+          iconButton=true
+          onClick=(action (toggle "dialogFlag" this))
+        }}
+          {{paper-icon icon="close"}}
+        {{/paper-button}}
+      {{/appbar.additional}}
+    {{/paper-appbar}}
+
+
+
+    {{#paper-dialog-content class="no-margin"}}
+        {{variable-editor value=tempValue}}
+    {{/paper-dialog-content}}
+
+    {{#paper-dialog-actions class="layout-row"}}
+      <span class="flex"></span>
+      {{#paper-button onClick=(action "onSave")}}Save Changes{{/paper-button}}
+      {{#paper-button onClick=(action "onCancel")}}Discard{{/paper-button}}
+    {{/paper-dialog-actions}}
+  </form>
+{{/paper-dialog}}

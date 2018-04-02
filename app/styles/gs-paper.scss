@@ -1,0 +1,73 @@
+.md-side-nav{
+  background: $appBar;
+
+  box-shadow: inset 5px 0 5px -5px rgba(0,0,0,0.16);
+  padding: 16px;
+
+
+}
+
+// removes the margin from dialog contents in order to display a sidenav
+// element directly at the dialog border
+.no-margin{
+  padding: 0 !important;
+  border-bottom: solid 1px $dividers;
+}
+
+.md-custom-input-container{
+  flex-grow: 2;
+  margin: 1em;
+  border: solid 1px $dividers;
+  transition: all ease .5s;
+  position: relative;
+
+  > div{
+    cursor: text;
+    padding: 0.5em;
+
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+  }
+
+  .md-subheader{
+      padding: 0;
+      margin: 0;
+      line-height: normal;
+
+      .md-subheader-inner{
+          padding: 0;
+      }
+  }
+
+  span.md-variable{
+    color: color($accent, '500');
+
+  }
+
+  .md-errors-spacer{
+    display: flex;
+
+    .md-char-counter:not(:last-child){
+      margin-right: 1em;
+    }
+  }
+}
+
+
+md-lineedit{
+  display: flex;
+  align-content: stretch;
+  align-items: stretch;
+  flex-grow: 2;
+
+  position: relative;
+
+  > dialog-line-container {
+    position: absolute;
+    right: 0;
+    left: 0;
+  }
+}

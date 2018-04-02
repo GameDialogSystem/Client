@@ -1,0 +1,50 @@
+<md-appbar-tabbar>
+  {{paper-icon "cloud_queue" size=24}}
+  {{#paper-tabs
+    center=center
+    stretch=stretch
+    borderBottom=borderBottom
+    selected=selectedTab
+    onChange=(action (mut selectedTab)) as |tabs|}}
+
+    {{yield (hash
+      tab=(component "paper-appbar-tab" tabs=tabs)
+    )}}
+
+    {{#from-elsewhere name="tabs" as |c|}}
+      {{#each c.tabs as |tab|}}
+        {{#tabs.tab value=tab.value}}
+          {{tab.label}}
+        {{/tabs.tab}}
+      {{/each}}
+    {{/from-elsewhere}}
+  {{/paper-tabs}}
+
+  {{yield (hash additional=(component "paper-appbar-additional"))}}
+</md-appbar-tabbar>
+
+
+
+{{#liquid-bind (hash tab=selectedTab) class="md-padding" as |current|}}
+  {{#from-elsewhere name="tabs-content" as |tabsContent|}}
+    {{#each tabsContent.tabs as |tab|}}
+      {{#paper-appbar-tab-content value=tab.value selectedTab=current.tab}}
+      {{#each tab.groups as |group|}}
+        {{#paper-appbar-tab-content-group label=group.label}}
+          {{#each group.buttons as |button|}}
+            {{paper-appbar-button
+              icon=button.icon
+              tooltip=button.tooltip
+              onClick=(action "buttonClicked" button.action)
+            }}
+          {{/each}}
+        {{/paper-appbar-tab-content-group}}
+      {{/each}}
+      {{/paper-appbar-tab-content}}
+    {{/each}}
+  {{/from-elsewhere}}
+
+    {{yield (hash
+      tabContent=(component "paper-appbar-tab-content" selectedTab=current.tab )
+    )}}
+{{/liquid-bind}}
