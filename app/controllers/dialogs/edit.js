@@ -35,7 +35,7 @@ export default Ember.Controller.extend({
         });
 
 
-        const connection = store.createRecord('dialog-connection', {
+        const connection = store.createRecord('connection', {
           id: uuidv4(),
 
           input: input,
@@ -72,10 +72,6 @@ export default Ember.Controller.extend({
         input.set('belongsTo', dialogLine);
 
         dialog.get('lines').pushObject(dialogLine);
-
-        console.log(input);
-        console.log(output);
-
 
 
         const self = this;
