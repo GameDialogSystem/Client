@@ -36,5 +36,5 @@ export default FlowBlockModel.extend({
     * starting one must have an precessor. To check if a dialog line is the
     * starting point of a connection, check if this attribute is null.
     */
-   previousLine: DS.belongsTo('dialog-line', { inverse: 'nextLines' }),
+   //previousLine: DS.belongsTo('dialog-line', { inverse: 'nextLines' }),
 });

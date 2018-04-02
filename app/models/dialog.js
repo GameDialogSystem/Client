@@ -17,5 +17,5 @@ export default DS.Model.extend({
   * All dialog lines are part of one dialog. This relationship is defined by this
   * property.
   */
-  lines: DS.hasMany('dialog-line')
+  lines: DS.hasMany('dialog-line'),
 });

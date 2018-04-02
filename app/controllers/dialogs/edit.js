@@ -1,8 +1,11 @@
 import Ember from 'ember';
+import uuidv4 from 'npm:uuid';
 
 export default Ember.Controller.extend({
   isShowingOptions: false,
   answerToBeEdited : null,
+
+  showToast: false,
 
   actions : {
     rerouteToIndex(){
@@ -22,14 +25,19 @@ export default Ember.Controller.extend({
         const lines = dialog.get('lines');
         const linesCount = lines.get("length");
 
+
+
         const input = store.createRecord('input', {
-          id : "line" + (linesCount+2) + "input" + 0,
+          id : uuidv4(),
+
           x: point.x,
           y: point.y
         });
 
-        const connection = store.createRecord('connection', {
-          id: Date.now(),
+
+        const connection = store.createRecord('dialog-connection', {
+          id: uuidv4(),
+
           input: input,
           output: output
         });
@@ -38,7 +46,7 @@ export default Ember.Controller.extend({
         output.set("connection", connection);
 
         const dialogLine = store.createRecord('dialog-line', {
-          id : linesCount+2,
+          id : uuidv4(),
           message : `I'm a new dialog line. Change me to something meaningfull :)`,
           x: point.x - 27,
           y: point.y - 20,
@@ -50,9 +58,14 @@ export default Ember.Controller.extend({
 
         // create an empty output connector to allow the creation of new connections
         let newOutput = this.get("store").createRecord('output', {
-          id: `line${this.get("model.id")}output${Math.floor((Math.random() * 1000) + 1)}`,
+          id: uuidv4(),
           belongsTo: dialogLine,
+          foo: dialog.lines.firstObject
         });
+
+
+
+
 
         // add the blank output to allow the connection of grandchildren
         dialogLine.get("outputs").pushObject(newOutput);
@@ -60,12 +73,15 @@ export default Ember.Controller.extend({
 
         dialog.get('lines').pushObject(dialogLine);
 
+        console.log(input);
+        console.log(output);
+
+
 
         const self = this;
         setTimeout(function(){
           self.send("automaticallyRelocateLines", dialog.get("startingLine"));
         }, 100)
-
     },
 
 
@@ -90,11 +106,31 @@ export default Ember.Controller.extend({
       this.get("model").redo();
     },
 
-    saveDialog: function(){
-      this.get("model").save();
-    },
-
     deleteBlock(block){
+      if(block.get('inputs.length') === 0){
+        this.set('toastMessage', 'Deletion cancelled: Cannot delete first dialog line');
+        this.set("showToastButton", false);
+        this.set('showToast', true);
+
+        return;
+      }
+
+
+      let hasChildren = false;
+      block.get('outputs').forEach((output) => {
+        if(output.get('isConnected')){
+          hasChildren = true;
+        }
+      })
+
+      if(hasChildren){
+        this.set('toastMessage', 'Deletion cancelled: Message line has children');
+        this.set("showToastButton", false);
+        this.set('showToast', true);
+
+        return;
+      }
+
       block.get('inputs').forEach(function(input){
         input.get("connection").then((connection) => {
             connection.get('output').then((output) => {
@@ -111,6 +147,10 @@ export default Ember.Controller.extend({
         output.destroyRecord();
       })
       block.destroyRecord();
+
+      this.set('toastMessage', 'Deleted Message Line');
+      this.set("showToastButton", true);
+      this.set('showToast', true);
     },
 
     cancelReroute(){
@@ -129,8 +169,8 @@ export default Ember.Controller.extend({
       //this.set('showLineEditDialog', true);
       this.get('store').findRecord('dialog-line', id)
       .then((line) => {
-        this.set('dialogLine', line.message);
-        this.set('showLineEditDialog', true);        
+        this.set('dialogLine', line);
+        this.set('showLineEditDialog', true);
       })
     },
 

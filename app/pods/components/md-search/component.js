@@ -29,7 +29,6 @@ export default Component.extend({
 
       if(this.get('showSearch')){
         const element = Ember.$(this.element).find('input');
-        //console.log(element);
         element.focus();
       }
     },

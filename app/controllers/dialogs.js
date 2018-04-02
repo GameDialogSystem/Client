@@ -14,25 +14,53 @@ export default Ember.Controller.extend({
   },
 
   actions: {
-    undo(){
+    undo() {
       alert("undo");
     },
 
-    redo(){
+    redo() {
       alert("redo");
     },
 
-    relayout(){
+    relayout() {
       const parentLine = this.get("dialogEditController.model.startingLine");
 
       parentLine.set("relayoutTimestamp", Date.now());
     },
 
-    loadDialogFile(){
+    loadDialogFile() {
       this.set('showLoadingDialog', true);
     },
 
-    closeDialog(){
+    saveDialogFile() {
+      const model = this.get('dialogEditController.model');
+
+
+      model.lines.forEach(line => {
+        line.save().then(l => {
+          line.outputs.forEach(output => {
+            output.save().then((o) => {
+              if (o.isConnected) {
+                o.connection.then((connection) => {
+                  connection.input.then((input) => {
+                    input.save().then((i) => {
+                      connection.save();
+                    });
+                  });
+                })
+              }
+            })
+          })
+        })
+      });
+
+
+      model.save().then(dialog => {
+        dialog.lines.invoke('save');
+      })
+    },
+
+    closeDialog() {
       this.set('showLoadingDialog', false);
     },
 

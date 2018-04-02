@@ -1,4 +1,5 @@
 import FlowElement from 'flow-logic/components/flow-element';
+import uuidv4 from 'npm:uuid';
 
 export default FlowElement.extend({
   // inject the store to create the blank outputs to allow
@@ -18,7 +19,7 @@ export default FlowElement.extend({
 
     // create an empty output connector to allow the creation of new connections
     let output = this.get("store").createRecord('output', {
-      id: `line${this.get("model.id")}output${outputs.get("length")}`,
+      id: uuidv4(),
       belongsTo: this.get("model"),
     });
 
@@ -54,7 +55,8 @@ export default FlowElement.extend({
      * the new block should be inserted
      */
     connectToNewBlock: function(output, point){
-      let connectToNewBlock = this.get('onConnectToNewBlock');
+      const connectToNewBlock = this.get('onConnectToNewBlock');
+
       if(connectToNewBlock !== null || connectToNewBlock !== undefined){
         connectToNewBlock(output, point);
         this.addEmptyOutput();

@@ -27,5 +27,5 @@ export default Route.extend({
 
           return true; // allows the loading template to be shown
         }
-      }  
+      }
 });

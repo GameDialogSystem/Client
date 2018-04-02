@@ -1,46 +1,56 @@
-
 <dialog-line-container class="layout-row flex">
   <div class="flex-70">
     <md-input-container class="md-default-theme md-block md-custom-input-container">
-      {{#paper-subheader}}Dialog Line{{/paper-subheader}}
-      <div
-        class="md-input-custom"
-        contenteditable="true"
-        spellcheck="false">{{value}}</div>
-
-
-      <div class="md-errors-spacer">
-          <div class="md-char-counter">Word count: {{wordCount}}</div>
-          <div class="md-char-counter">Language: {{localLanguageName}}</div>
+      <div>
+        {{#paper-subheader}}Dialog Line{{/paper-subheader}}
+        <div class="md-input-custom" contenteditable="true" spellcheck="false"></div>
       </div>
     </md-input-container>
   </div>
   <div class="layout-column flex-30">
-    <div class="flex">
-      {{#if variables}}
-        {{#paper-list}}
+    <div class="flex md-side-nav">
+      {{#paper-list}}
+        {{#paper-subheader}}Speaker{{/paper-subheader}}
+        {{#paper-item}}
+          {{paper-icon "person" class="md-avatar-icon"}}
+          <div class="md-list-item-text">
+            <h3>Character Name</h3>
+            <p>Description</p>
+          </div>
+        {{/paper-item}}
+
+        {{paper-divider}}
+
+        {{#paper-subheader}}Statistics{{/paper-subheader}}
+
+        {{#paper-item}}
+          <p>{{wordCount}} Words</p>
+        {{/paper-item}}
+        {{#paper-item}}
+          <p>{{localLanguageName}}</p>
+        {{/paper-item}}
+
+        {{paper-divider}}
+
+        {{#if variables}}
           {{#paper-subheader}}Used Variables{{/paper-subheader}}
 
           {{#each variables as |variable|}}
-            {{#paper-item as |controls|}}
+            {{#paper-item}}
+              {{paper-icon "label"}}
               <p>{{variable}}</p>
-              <div class="md-secondary-container">
-                {{#controls.button secondary=true iconButton=true}}
-                  {{paper-icon "label"}}
-                {{/controls.button}}
-              </div>
             {{/paper-item}}
           {{/each}}
-        {{/paper-list}}
-      {{else}}
-        <h1>No Variables</h1>
-        <p>
-          This dialog line currently does not use variables. Variables
-          adds variation to your dialogs and makes them more interesting.
-          In case you don't know how to use variables see this Tutorial.
-        </p>
-      {{/if}}
+        {{else}}
+          {{#paper-subheader}}No Variables{{/paper-subheader}}
 
+          {{#paper-item}}
+            <p>
+              This dialog line currently does not use variables. Variables adds variation to your dialogs and makes them more interesting. In case you don't know how to use variables see this Tutorial.
+            </p>
+          {{/paper-item}}
+        {{/if}}
+        {{/paper-list}}
     </div>
   </div>
 </dialog-line-container>

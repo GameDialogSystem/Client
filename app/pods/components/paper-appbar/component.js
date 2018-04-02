@@ -7,8 +7,7 @@ export default Component.extend({
 
   actions: {
     buttonClicked(action) {
-      console.log(action);
       action.function(action.target);
     }
-  }  
+  }
 });
