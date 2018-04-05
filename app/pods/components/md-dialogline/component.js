@@ -32,8 +32,8 @@ export default FlowElement.extend({
    * the model has the state "root.loaded.saved" the model was fully loaded
    * and the width and height can be set by the DOM element geometry.
    */
-  isLoaded: Ember.observer("model.currentState.stateName", function(){
-    if(this.get("model.currentState.stateName") === "root.loaded.saved"){
+  isLoaded: Ember.observer("model.isLoading", function(){
+    if(this.get("model.isLoaded")){
       this.addEmptyOutput();
 
       const element = Ember.$(this.element);
@@ -41,6 +41,23 @@ export default FlowElement.extend({
       this.set("model.height", element.height());
     }
   }),
+
+  didReceiveAttrs() {
+    this._super(...arguments);
+
+
+  },
+
+  didInsertElement() {
+    this._super(...arguments);
+
+    // TODO get rid of this workaround
+    // this line is currently necessary to initialize the observer to add empty
+    // output pins. BE AWARE THAT THIS IS AN UGLY WORKAROUND AND WILL CHANGE
+    // 100% IN FUTURE
+    this.get("model.isLoading");
+  },
+
 
 
   actions: {

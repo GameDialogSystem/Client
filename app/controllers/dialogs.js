@@ -36,28 +36,23 @@ export default Ember.Controller.extend({
       const model = this.get('dialogEditController.model');
 
 
-      model.lines.forEach(line => {
-        line.save().then(l => {
-          line.outputs.forEach(output => {
-            output.save().then((o) => {
-              if (o.isConnected) {
-                o.connection.then((connection) => {
-                  connection.input.then((input) => {
-                    input.save().then((i) => {
-                      connection.save();
-                    });
-                  });
+      model.get('lines').forEach(line => {
+        line.save().then(() => {
+          line.get('outputs').forEach(output => {
+            if (output.get('isConnected')) {
+              output.save().then(() => {
+                output.get('connection').then(connection => {
+                  connection.save();
                 })
-              }
-            })
+              });
+            }
+          });
+
+          line.get('inputs').forEach(input => {
+            input.save();
           })
-        })
+        });
       });
-
-
-      model.save().then(dialog => {
-        dialog.lines.invoke('save');
-      })
     },
 
     closeDialog() {

@@ -59,8 +59,7 @@ export default Ember.Controller.extend({
         // create an empty output connector to allow the creation of new connections
         let newOutput = this.get("store").createRecord('output', {
           id: uuidv4(),
-          belongsTo: dialogLine,
-          foo: dialog.lines.firstObject
+          belongsTo: dialogLine
         });
 
 
