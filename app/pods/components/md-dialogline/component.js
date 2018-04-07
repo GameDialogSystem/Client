@@ -1,7 +1,7 @@
 import FlowElement from 'flow-logic/components/flow-element';
-import DS from 'ember-data';
-import { task } from 'ember-concurrency';
-import uuidv4 from 'npm:uuid';
+import Ember from 'ember';
+
+
 
 export default FlowElement.extend({
   // inject the store to create the blank outputs to allow

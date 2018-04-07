@@ -1,4 +1,5 @@
 import Component from '@ember/component';
+import Ember from 'ember';
 
 export default Component.extend({
   tagName: 'table',
@@ -65,5 +66,5 @@ export default Component.extend({
     onFileSelect(file){
       this.get('onFileSelect')(file);
     }
-  }  
+  }
 });

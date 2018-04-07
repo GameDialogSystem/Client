@@ -1,4 +1,5 @@
 import Component from '@ember/component';
+import Ember from 'ember';
 
 export default Component.extend({
   tagName: 'md-search',
@@ -33,7 +34,7 @@ export default Component.extend({
       }
     },
 
-    change(value) {
+    change() {
     }
   }
 });

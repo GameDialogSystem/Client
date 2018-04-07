@@ -22,10 +22,6 @@ export default Ember.Controller.extend({
     createNewDialogLine: function(output, point){
         const store = this.get('store');
         const dialog = this.get('model');
-        const lines = dialog.get('lines');
-        const linesCount = lines.get("length");
-
-
 
         const input = store.createRecord('input', {
           id : uuidv4(),

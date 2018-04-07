@@ -1,5 +1,6 @@
 import Component from '@ember/component';
 import RSVP from 'rsvp';
+import Ember from 'ember';
 
 export default Component.extend({
   tagName: '',

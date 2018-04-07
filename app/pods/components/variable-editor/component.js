@@ -1,4 +1,5 @@
 import Component from '@ember/component';
+import Ember from 'ember';
 import franc from 'npm:franc';
 import Langs from 'npm:langs';
 
@@ -191,8 +192,8 @@ export default Component.extend({
    */
   setCaretPosition: function(position) {
     const element = this.getEditableElement()[0];
-    const range = document.createRange();
-    const selection = window.getSelection();
+    //const range = document.createRange();
+    //const selection = window.getSelection();
     const childNodes = element.childNodes;
 
     for (let i = 0; i < childNodes.length; i++) {
@@ -271,18 +272,6 @@ export default Component.extend({
 
   getEditableElement() {
     return Ember.$(this.element).find("div [contenteditable=true]");
-  },
-
-  updateUsedVariables() {
-    let variables = element.text().match(self.get('regex'));
-    if (variables !== null) {
-      let a = variables.map(variable => {
-        return variable.replace('[', '').replace(']', '');
-      })
-      self.set("variables", a);
-    } else {
-      self.set("variables", null);
-    }
   },
 
   modify(e) {
@@ -365,18 +354,18 @@ export default Component.extend({
     })
 
     // auto focus in case the user clicks outside of the contenteditable element
-    this.$().click((e) => {
+    this.$().click(() => {
       element.focus();
       this.setCaretPosition(element.text().length)
     })
 
     // save the content each time it changed into a temporal value
     element.bind("DOMSubtreeModified", function() {
-      const caretPosition = self.getCaretPosition();
+      //const caretPosition = self.getCaretPosition();
 
       const value = self.get('value');
       if(value !== this.innerHTML){
-        self.set('value', $(this).text());
+        self.set('value', Ember.$(this).text());
       }
 
       //self.setCaretPosition(caretPosition)
@@ -401,7 +390,6 @@ export default Component.extend({
     keyDown(e) {
       const self = e.data.context;
 
-      const element = self.getEditableElement()[0];
       const selection = self.getSelection();
       const containsSelection = self.getSelection() !== undefined;
 
@@ -425,11 +413,6 @@ export default Component.extend({
       }
 
       if (containsSelection) {
-        // handle delete key
-        if (e.keyCode == 46) {
-
-        }
-
         // ignore left/right key click
         if (e.keyCode === 37) {
           const caretPosition = self.getCaretPositionFromElement();
@@ -447,7 +430,6 @@ export default Component.extend({
 
         if (e.keyCode == 39) {
           const caretPosition = self.getCaretPositionFromElement();
-          const childNodes = element.childNodes;
 
           // skip the zero space width character if the next sibling is a plain
           // text node
