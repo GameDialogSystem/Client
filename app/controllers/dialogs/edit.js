@@ -118,13 +118,15 @@ export default Ember.Controller.extend({
       }
 
       block.get('inputs').forEach(function(input){
-        input.get("connection").then((connection) => {
-            connection.get('output').then((output) => {
+        if(input.get('isConnected')){
+          input.get('connection').then(connection => {
+            connection.get('output').then(output => {
               output.destroyRecord();
-            })
+            });
 
-          connection.destroyRecord();
-        })
+            connection.destroyRecord();
+          });
+        }
 
         input.destroyRecord();
       })
@@ -133,6 +135,7 @@ export default Ember.Controller.extend({
         output.destroyRecord();
       })
       block.destroyRecord();
+
 
       this.set('toastMessage', 'Deleted Message Line');
       this.set("showToastButton", true);
