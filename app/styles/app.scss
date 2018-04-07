@@ -100,7 +100,7 @@ md-appbar{
   }
 
   md-tabs{
-    border-radius: 0px;
+    border-radius: 0;
   }
 
   .md-tab{
@@ -241,7 +241,7 @@ flow-content{
 }
 
 .md-input-custom:focus{
-  outline: 0px solid transparent;
+  outline: 0 solid transparent;
 
 
 }
@@ -340,7 +340,6 @@ md-dialog-content {
 
     display: flex;
     flex-direction: column;
-    flex-flow: center;
     justify-content: center;
 
     > .liquid-child{
