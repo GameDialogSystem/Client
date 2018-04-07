@@ -4,9 +4,7 @@ export default Route.extend({
 
       model(params) {
           const store = this.get('store');
-          const dialog = store.findRecord('dialog', params.dialog_id);
-
-          return dialog;
+          return store.findRecord('dialog', params.dialog_id);
       },
 
       actions: {

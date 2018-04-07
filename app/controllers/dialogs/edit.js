@@ -47,7 +47,7 @@ export default Ember.Controller.extend({
 
         const dialogLine = store.createRecord('dialog-line', {
           id : uuidv4(),
-          message : `I'm a new dialog line. Change me to something meaningfull :)`,
+          message : `Random Text ${Math.floor((Math.random() * 100) + 1)}`,
           x: point.x - 27,
           y: point.y - 20,
 
@@ -56,18 +56,13 @@ export default Ember.Controller.extend({
           ]
         });
 
-        // create an empty output connector to allow the creation of new connections
-        let newOutput = this.get("store").createRecord('output', {
-          id: uuidv4(),
-          belongsTo: dialogLine
-        });
 
 
 
 
 
         // add the blank output to allow the connection of grandchildren
-        dialogLine.get("outputs").pushObject(newOutput);
+        //dialogLine.get("outputs").pushObject(newOutput);
         input.set('belongsTo', dialogLine);
 
         dialog.get('lines').pushObject(dialogLine);

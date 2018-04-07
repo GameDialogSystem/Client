@@ -1,4 +1,6 @@
 import FlowElement from 'flow-logic/components/flow-element';
+import DS from 'ember-data';
+import { task } from 'ember-concurrency';
 import uuidv4 from 'npm:uuid';
 
 export default FlowElement.extend({
@@ -14,12 +16,23 @@ export default FlowElement.extend({
 
   autoresizeEnabled : true,
 
+
+
+  emptyOutput: null,
+
+
+  didInsertElement() {
+    this._super(...arguments);
+
+    this.addEmptyOutput();
+  },
+
   addEmptyOutput: function(){
     let outputs = this.get("model.outputs");
 
     // create an empty output connector to allow the creation of new connections
     let output = this.get("store").createRecord('output', {
-      id: uuidv4(),
+      id: "o"+outputs.get('length')+"__"+(Math.floor(Math.random() * 10000) + 1),
       belongsTo: this.get("model"),
     });
 
@@ -27,12 +40,28 @@ export default FlowElement.extend({
     this.get("model.outputs").pushObject(output);
   },
 
+
+  connectedOutputs: Ember.computed('model.outputs.@each.isConnected', function() {
+    const outputs = this.get('model.outputs');
+    return outputs.filterBy('isConnected', true);
+  }),
+
+
+  unconnectedOutput: Ember.computed('model.outputs.@each.isConnected', function() {
+    const outputs = this.get('model.outputs');
+    return outputs.filterBy('isConnected', false);
+  }),
+
+
+
   /**
    * isLoaded - Observer that listens for the model state. In case that
    * the model has the state "root.loaded.saved" the model was fully loaded
    * and the width and height can be set by the DOM element geometry.
    */
+/*
   isLoaded: Ember.observer("model.isLoading", function(){
+    //console.log(this.get("model"));
     if(this.get("model.isLoaded")){
       this.addEmptyOutput();
 
@@ -41,23 +70,7 @@ export default FlowElement.extend({
       this.set("model.height", element.height());
     }
   }),
-
-  didReceiveAttrs() {
-    this._super(...arguments);
-
-
-  },
-
-  didInsertElement() {
-    this._super(...arguments);
-
-    // TODO get rid of this workaround
-    // this line is currently necessary to initialize the observer to add empty
-    // output pins. BE AWARE THAT THIS IS AN UGLY WORKAROUND AND WILL CHANGE
-    // 100% IN FUTURE
-    this.get("model.isLoading");
-  },
-
+*/
 
 
   actions: {

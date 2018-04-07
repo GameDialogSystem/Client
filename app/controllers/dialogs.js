@@ -41,10 +41,8 @@ export default Ember.Controller.extend({
           line.get('outputs').forEach(output => {
             if (output.get('isConnected')) {
               output.save().then(() => {
-                output.get('connection').then(connection => {
-                  connection.save();
-                })
-              });
+                output.get('connection').save();
+              })
             }
           });
 
