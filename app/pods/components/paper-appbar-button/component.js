@@ -4,7 +4,7 @@ export default Component.extend({
   tagName: '',
 
   actions: {
-    onClick: function(){
+    onClick(){
       this.get("onClick")();
     }
   }  

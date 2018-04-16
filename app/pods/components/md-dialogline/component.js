@@ -27,7 +27,7 @@ export default FlowElement.extend({
     this.addEmptyOutput();
   },
 
-  addEmptyOutput: function(){
+  addEmptyOutput(){
     let outputs = this.get("model.outputs");
 
     // create an empty output connector to allow the creation of new connections
@@ -84,7 +84,7 @@ export default FlowElement.extend({
      * @param {Point} point - the position where the mouse button was released and
      * the new block should be inserted
      */
-    connectToNewBlock: function(output, point){
+    connectToNewBlock(output, point){
       const connectToNewBlock = this.get('onConnectToNewBlock');
 
       if(connectToNewBlock !== null || connectToNewBlock !== undefined){
@@ -93,7 +93,7 @@ export default FlowElement.extend({
       }
     },
 
-    elementEdit: function(){
+    elementEdit(){
       this.get('onElementEdit')();
     }
   }

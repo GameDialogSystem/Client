@@ -190,7 +190,7 @@ export default Component.extend({
    * @param  {type} position The offset between the beginning of the element
    * content and the cursor position.
    */
-  setCaretPosition: function(position) {
+  setCaretPosition(position) {
     const element = this.getEditableElement()[0];
     //const range = document.createRange();
     //const selection = window.getSelection();
@@ -231,7 +231,7 @@ export default Component.extend({
    *
    * @param  {string} text From where the text count should be calculated
    */
-  setWordCountFromText: function(text) {
+  setWordCountFromText(text) {
     // return in case the text is empty
     if(text === null || text === undefined){
       return;
