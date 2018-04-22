@@ -30,7 +30,7 @@ export default Ember.Controller.extend({
       store.push({
         data: [{
           id: 1,
-          type: 'dialog',
+          type: 'dialogs',
           attributes: {
             name: arguments[1],
           },

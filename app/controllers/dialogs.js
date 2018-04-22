@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import RSVP from 'rsvp';
 
 export default Ember.Controller.extend({
   dialogEditController: Ember.inject.controller('dialogs.edit'),
@@ -35,23 +36,82 @@ export default Ember.Controller.extend({
     saveDialogFile() {
       const model = this.get('dialogEditController.model');
 
+      const store = this.get('store');
 
-      model.get('lines').forEach(line => {
-        line.save().then(() => {
-          line.get('outputs').forEach(output => {
-            if (output.get('isConnected')) {
-              output.save().then(() => {
-                output.get('connection').save();
-              })
-            }
-          });
+      // save dialog line always before connectors and connections
+      RSVP.allSettled(store.peekAll('dialog-line').filter(dialogLine => (dialogLine.get('isNew') || dialogLine.get('isDeleted') || dialogLine.get('hasDirtyAttributes'))).map(dialogLine => {
+        return dialogLine.save();
+      })).then(() => {
+        let models = ['output', 'input'];
 
-          line.get('inputs').forEach(input => {
-            input.save();
-          })
+        let connectorsPromises = new Array();
+        models.forEach(model => {
+          let connectors = store.peekAll(model).filter(connector =>
+            (connector.get('isNew') && connector.get('isConnected')));
+
+          connectorsPromises = connectorsPromises.concat(connectors.map(connector => {
+            return connector.save().then(() => {
+              if (connector.get('connection').then) {
+                connector.get('connection').then(connection => {
+                  return connection.save();
+                });
+              }
+            });
+          }));
+        });
+
+
+        RSVP.allSettled(connectorsPromises).then(() => {
+          model.save();
         });
       });
     },
+    /*
+    let pendingSaves = new Array();
+    model.get('lines').forEach(line => {
+      if (line.get('isNew')) {
+        line.save().then(() => {
+          line.get('inputs').forEach(input => {
+            input.get('connection').then(connection => {
+              connection.save().then(() => {
+                input.save();
+              });
+            });
+          });
+          //pendingSaves.push(RSVP.allSettled(line.get('inputs').map(input => input.save())));
+        });
+      }
+    });
+
+    RSVP.allSettled(pendingSaves).then(() => {
+      console.log("Ready to take off");
+    })
+    */
+    //RSVP.allSettled(model.get('lines').map(line => line.save())).then(function(array){
+    //  model.save();
+    //});
+
+
+    //
+
+
+    /*
+    $.ajax({
+      data: model,
+      dataType: 'json',
+      method: 'POST',
+      url: 'http://localhost:3000/dialogs/testing.xml',
+
+      headers: {
+        'Content-Type': 'application/vnd.api+json',
+        'Accept': 'application/vnd.api+json'
+      }
+    }).then((digitalInventory) => {
+      //this.get('store').pushPayload(digitalInventory);
+      //this.transitionTo('thank-you');
+    });
+    */
+
 
     closeDialog() {
       this.set('showLoadingDialog', false);

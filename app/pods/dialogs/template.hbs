@@ -30,7 +30,7 @@
       {{! Dialog loading and saving actions}}
       {{#paper-appbar-tab-content-group label="Foo"}}
         {{paper-appbar-button icon="folder" tooltip="Load Dialog" onClick=(action "loadDialogFile")}}
-        {{paper-appbar-button icon="save" tooltip="Save Dialog"}}
+        {{paper-appbar-button icon="save" tooltip="Save Dialog" onClick=(action "saveDialogFile")}}
       {{/paper-appbar-tab-content-group}}
     {{/paper-toolbar-tools}}
   {{/appbar.tabContent}}
