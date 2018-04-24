@@ -1,13 +1,14 @@
 ---
 language: node_js
 node_js:
-  - "6"
+  - "8.11.1"
+after_success: npm run coverage
 
 sudo: false
 dist: trusty
 
 addons:
-  chrome: stable
+  chromiun: stable
 
 cache:
   directories:

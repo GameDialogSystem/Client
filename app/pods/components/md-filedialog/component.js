@@ -5,7 +5,7 @@ import Ember from 'ember';
 export default Component.extend({
   tagName: '',
 
-  directory: 'null',
+  directory: null,
 
   search: '',
 
@@ -30,6 +30,9 @@ export default Component.extend({
 
   currentDirectory: Ember.computed('directory', function() {
     const directory = this.get('directory');
+    if(directory === null){
+      return [];
+    }
 
     if(directory === 'null'){
       return ["Home"];
@@ -69,6 +72,7 @@ export default Component.extend({
 
   findFiles(){
     if(this.get('isFindingDirectories')) { return; }
+    if(this.get('directory') === null) { return; }
 
     this.set('isFindingDirectories', true);
     this.getJSON(this.get('directory'))

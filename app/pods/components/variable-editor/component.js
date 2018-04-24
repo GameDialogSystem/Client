@@ -242,6 +242,10 @@ export default Component.extend({
   },
 
   setLanguageFromText(text) {
+    if(text === null || text === undefined){
+      return;
+    }
+    
     if (text.split(" ").length >= 10) {
       this.set('language', franc(text));
 

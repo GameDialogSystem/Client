@@ -21,6 +21,10 @@ export default Component.extend({
     const sortOrder = this.get('sortOrder');
 
     let array = this.get('files');
+    if(!array){
+      return new Array();
+    }
+
     array.sort((a, b) => {
       let value1;
       let value2;

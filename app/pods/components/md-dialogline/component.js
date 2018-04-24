@@ -30,8 +30,17 @@ export default FlowElement.extend({
   addEmptyOutput(){
     let outputs = this.get("model.outputs");
 
+    if(!outputs){
+      return new Array();
+    }
+
+    const store = this.get('store');
+    if(!store){
+      return;
+    }
+
     // create an empty output connector to allow the creation of new connections
-    let output = this.get("store").createRecord('output', {
+    let output = store.createRecord('output', {
       id: "o"+outputs.get('length')+"__"+(Math.floor(Math.random() * 10000) + 1),
       belongsTo: this.get("model"),
     });
@@ -43,12 +52,22 @@ export default FlowElement.extend({
 
   connectedOutputs: Ember.computed('model.outputs.@each.isConnected', function() {
     const outputs = this.get('model.outputs');
+
+    if(!outputs){
+      return new Array();
+    }
+
     return outputs.filterBy('isConnected', true);
   }),
 
 
   unconnectedOutput: Ember.computed('model.outputs.@each.isConnected', function() {
     const outputs = this.get('model.outputs');
+
+    if(!outputs){
+      return new Array();
+    }
+
     return outputs.filterBy('isConnected', false);
   }),
 
