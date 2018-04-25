@@ -2,7 +2,6 @@
 language: node_js
 node_js:
   - "8.11.1"
-after_success: npm run coverage
 
 sudo: false
 dist: trusty
@@ -12,7 +11,7 @@ addons:
 
 cache:
   directories:
-    - $HOME/.npm
+    - node_modules
 
 env:
   global:
@@ -25,3 +24,5 @@ before_install:
 script:
   - npm run lint:js
   - npm test
+  
+after_success: npm run coverage
