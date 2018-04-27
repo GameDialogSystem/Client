@@ -1,6 +1,6 @@
 import FlowElement from 'flow-logic/components/flow-element';
 import Ember from 'ember';
-
+import uuidv4 from 'npm:uuid';
 
 
 export default FlowElement.extend({
@@ -9,16 +9,7 @@ export default FlowElement.extend({
   // dialog line
   store: Ember.inject.service(),
 
-  isExtended: true,
-  displayedRows: 3,
-
-  _height: 0,
-
   autoresizeEnabled : true,
-
-
-
-  emptyOutput: null,
 
 
   didInsertElement() {
@@ -41,7 +32,7 @@ export default FlowElement.extend({
 
     // create an empty output connector to allow the creation of new connections
     let output = store.createRecord('output', {
-      id: "o"+outputs.get('length')+"__"+(Math.floor(Math.random() * 10000) + 1),
+      id: uuidv4(),
       belongsTo: this.get("model"),
     });
 
@@ -72,24 +63,6 @@ export default FlowElement.extend({
   }),
 
 
-
-  /**
-   * isLoaded - Observer that listens for the model state. In case that
-   * the model has the state "root.loaded.saved" the model was fully loaded
-   * and the width and height can be set by the DOM element geometry.
-   */
-/*
-  isLoaded: Ember.observer("model.isLoading", function(){
-    //console.log(this.get("model"));
-    if(this.get("model.isLoaded")){
-      this.addEmptyOutput();
-
-      const element = Ember.$(this.element);
-      this.set("model.width", element.width());
-      this.set("model.height", element.height());
-    }
-  }),
-*/
 
 
   actions: {
