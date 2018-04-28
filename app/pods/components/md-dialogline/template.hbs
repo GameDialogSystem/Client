@@ -11,6 +11,7 @@
 </flow-input-container>
 
   <flow-content>
+
     <div class="actor">
       {{paper-icon "person" size=48}}
     </div>
@@ -22,6 +23,29 @@
          {{paper-icon "edit"}}
       {{/paper-button}}
     </div>
+<!--
+    <ul>
+      <li>Neighbours:
+        <ul>
+          {{#each model.neighbours as |neighbour|}}
+            <li>{{neighbour.height}}</li>
+          {{/each}}
+        </ul>
+      </li>
+      <li>Margin: {{model.margin}}</li>
+      <li>Width: {{model.width}}, Height: {{model.height}} </li>
+      <li>Children: {{model.connectedChildren.length}}
+        <ul>
+          {{#each model.connectedChildren as |child|}}
+            <li>{{child.childrenWidth}}</li>
+          {{/each}}
+        </ul>
+
+      </li>
+      <li>ChildrenWidth: {{model.childrenWidth}}</li>
+      <li>X:{{model.y}}    Y:{{model.x}}</li>
+    </ul>
+  -->
   </flow-content>
 
 <flow-output-container>

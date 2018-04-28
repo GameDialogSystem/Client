@@ -2,6 +2,10 @@ import FlowElement from 'flow-logic/components/flow-element';
 import Ember from 'ember';
 import uuidv4 from 'npm:uuid';
 
+// this import is a workaround needed by ember browserify see
+// https://github.com/ef4/ember-browserify for more information
+// about this problem
+import ResizeSensor from "npm:css-element-queries";
 
 export default FlowElement.extend({
   // inject the store to create the blank outputs to allow

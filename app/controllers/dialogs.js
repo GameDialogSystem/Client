@@ -1,8 +1,11 @@
 import Ember from 'ember';
 import RSVP from 'rsvp';
+import { inject as service } from '@ember/service';
 
 export default Ember.Controller.extend({
   dialogEditController: Ember.inject.controller('dialogs.edit'),
+
+  leftToRightAutolayout: service('auto-layout'),
 
   showLoadingDialog: false,
 
@@ -26,7 +29,7 @@ export default Ember.Controller.extend({
     relayout() {
       const parentLine = this.get("dialogEditController.model.startingLine");
 
-      parentLine.set("relayoutTimestamp", Date.now());
+      this.get('leftToRightAutolayout').relayout(parentLine);
     },
 
     loadDialogFile() {
