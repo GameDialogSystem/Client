@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import RSVP from 'rsvp';
 import uuidv4 from 'npm:uuid';
 
 export default Ember.Controller.extend({
@@ -6,6 +7,39 @@ export default Ember.Controller.extend({
   answerToBeEdited: null,
 
   showToast: false,
+  flatArray(arr) {
+    return arr.reduce((acc, val) => Array.isArray(val) ? acc.concat(this.flatArray(val)) : acc.concat(val), []);
+  },
+
+  blockIsContainedWithinSelection(block, selectedBlocks) {
+    const id = block.get('id');
+
+    let result = false;
+    selectedBlocks.forEach(block => {
+      if (block.get('model.id') === id) {
+        result = true;
+      }
+    });
+
+    return result;
+  },
+
+  deletesAllChildren(block, selectedBlocks) {
+    let self = this;
+
+    const connectedOutputs = block.get('outputs').filterBy('isConnected');
+    if (connectedOutputs.length === 0) {
+      return this.blockIsContainedWithinSelection(block, selectedBlocks);
+    }
+
+    const results = block.get('outputs').filterBy('isConnected').map(output => {
+      const child = output.get('connection.input.belongsTo');
+
+      return this.deletesAllChildren(child, selectedBlocks);
+    })
+
+    return results;
+  },
 
   actions: {
     rerouteToIndex() {
@@ -93,7 +127,10 @@ export default Ember.Controller.extend({
       this.get("model").redo();
     },
 
-    deleteBlock(block) {
+
+    deleteBlock(block, selectedBlocks) {
+      const self = this;
+
       if (block.get('inputs.length') === 0) {
         this.set('toastMessage', 'Deletion cancelled: Cannot delete first dialog line');
         this.set("showToastButton", false);
@@ -109,7 +146,9 @@ export default Ember.Controller.extend({
         }
       })
 
-      if (hasChildren) {
+      if (hasChildren && this.flatArray(this.deletesAllChildren(block, selectedBlocks)).includes(false)) {
+
+
         this.set('toastMessage', 'Deletion cancelled: Message line has children');
         this.set("showToastButton", false);
         this.set('showToast', true);
@@ -117,32 +156,38 @@ export default Ember.Controller.extend({
         return;
       }
 
-      block.get('inputs').forEach(function(input) {
-        if (input.get('isConnected')) {
+
+      let promise = new Promise(function(resolve, reject) {
+        block.get('inputs').filterBy('isConnected').forEach(function(input) {
           input.get('connection').then(connection => {
             connection.get('output').then(output => {
-              output.destroyRecord();
+              output.destroyRecord().then(() => {
+                connection.destroyRecord().then(() => {
+                  input.destroyRecord().then(() => {
+                    resolve('blub');
+                  });
+                });
+              });
             });
-
-            connection.destroyRecord();
           });
-        }
+        });
+      }).then((value) => {
+        let outputs = block.get('outputs').map(function(output) {
+          return output.destroyRecord();
+        })
 
-        input.destroyRecord();
-      })
+        RSVP.allSettled(outputs).then(() => {
+          block.destroyRecord().then(() => {
+            this.set('toastMessage', 'Deleted Message Line');
+            this.set("showToastButton", true);
+            this.set('showToast', true);
 
-      block.get('outputs').forEach(function(output) {
-        output.destroyRecord();
-      })
+            const dialog = this.get('model');
+            this.send("automaticallyRelocateLines", dialog.get("startingLine"));
+          })
+        });
 
-      block.destroyRecord().then(() => {
-        this.set('toastMessage', 'Deleted Message Line');
-        this.set("showToastButton", true);
-        this.set('showToast', true);
-
-        const dialog = this.get('model');
-        this.send("automaticallyRelocateLines", dialog.get("startingLine"));
-      })
+      });
     },
 
     cancelReroute() {
