@@ -1,21 +1,139 @@
-{{to-elsewhere named="tabs" send=(hash tabs=tabs) }}
-{{to-elsewhere named="tabs-content" send=(hash tabs=tabs) }}
+<div class="application">
+  <div class="hotbar">
+    <div>
+      <div class="content">
+        {{paper-icon "grade" size=32}}
+      </div>
+    </div>
+    <div>
+      <div class="content">
+        {{paper-icon "loyalty" size=32}}
+      </div>
+    </div>
+    <div>
+      <div class="content">
+        {{paper-icon "help" size=32}}
+      </div>
+    </div>
+    <div>
+      <div class="content">
+        {{paper-icon "settings" size=32}}
+      </div>
+    </div>
+    <div>
+      <div class="content">
+        {{paper-icon "fingerprint" size=32}}
+      </div>
+    </div>
+  </div>
+  <div class="content">
+    {{#paper-appbar title="Hoppelhase" as |appbar|}}
+      {{appbar.tab label="Start" value="start"}}
+      {{#appbar.tabContent value="start" }}
+        {{#paper-toolbar-tools}}
+          {{! Dialog loading and saving actions}}
+          {{#paper-appbar-tab-content-group label="Persistance" }}
+            {{paper-appbar-button icon="folder" tooltip="Load Dialog" onClick=(action "loadDialogFile")}} {{paper-appbar-button icon="save" tooltip="Save Dialog" onClick=(action "saveDialogFile")}}
+          {{/paper-appbar-tab-content-group}}
 
-{{flow-container
-  blocks=model.lines
-  onDeleteBlock=(action 'deleteBlock')
-  onElementEdit=(action 'editDialogLine')
-  onConnectToNewBlock=(action 'createNewDialogLine')}}
+          {{! Load dialog button}}
+          {{#paper-appbar-tab-content-group label="Changes" }}
+            {{paper-appbar-button icon="undo" tooltip="Undo Changes"}} {{paper-appbar-button icon="redo" tooltip="Redo Changes"}}
+          {{/paper-appbar-tab-content-group}}
+          {{#paper-appbar-tab-content-group label="Team" }}
+            {{paper-appbar-button icon="notifications" tooltip="Enable Notification"}} {{paper-appbar-button icon="group" tooltip="Get Involved Team Members"}} {{paper-appbar-button icon="group_add" tooltip="Add Team Members"}}
+          {{/paper-appbar-tab-content-group}}
+          {{#paper-appbar-tab-content-group label="Layout" }}
+            {{paper-appbar-button icon="transform" tooltip="Auto Layout" onClick=(action "relayout")}}
+          {{/paper-appbar-tab-content-group}}
+          {{#paper-appbar-tab-content-group label="Layout" }}
+            {{paper-appbar-button icon="zoom_in" tooltip="Zoom In"}} {{paper-appbar-button icon="zoom_out" tooltip="Zoom Out"}}
+            {{#paper-menu as |menu|}}
+              {{#menu.trigger}}
+                {{#paper-button iconButton=true}}
+                  {{paper-icon "search" size=24}}
+                {{/paper-button}}
+              {{/menu.trigger}}
 
-{{#if showToast}}
-  {{#paper-toast position="bottom left" duration=3000 capsule=false onClose=(action (toggle 'showToast' this)) as |toast|}}
-     {{#toast.text}}{{toastMessage}}{{/toast.text}}
-     {{#if showToastButton}}
-      {{#paper-button accent=true}}Undo{{/paper-button}}
-     {{/if}}
-   {{/paper-toast}}
-{{/if}}
+              {{#menu.content width=4 as |content|}}
+                {{#content.menu-item onClick=(action "changeZoomLevel" 200)}}
+                  <span class="md-menu-align-target">200%</span>
+                {{/content.menu-item}}
+                {{#content.menu-item onClick=(action "changeZoomLevel" 150)}}
+                  <span class="md-menu-align-target">150%</span>
+                {{/content.menu-item}}
+                {{#content.menu-item onClick=(action "changeZoomLevel" 100)}}
+                  <span class="md-menu-align-target">100%</span>
+                {{/content.menu-item}}
+                {{#content.menu-item onClick=(action "changeZoomLevel" 75)}}
+                  <span class="md-menu-align-target">75%</span>
+                {{/content.menu-item}}
+                {{#content.menu-item onClick=(action "changeZoomLevel" 50)}}
+                  <span class="md-menu-align-target">50%</span>
+                {{/content.menu-item}}
+                {{#content.menu-item onClick=(action "changeZoomLevel" 25)}}
+                  <span class="md-menu-align-target">25%</span>
+                {{/content.menu-item}}
+              {{/menu.content}}
+            {{/paper-menu}}
+          {{/paper-appbar-tab-content-group}}
+        {{/paper-toolbar-tools}}
+      {{/appbar.tabContent}}
 
-{{#if showLineEditDialog}}
-  {{dialogline-dialog value=dialogLine.message dialogFlag=showLineEditDialog}}
-{{/if}}
+
+      {{#appbar.additional}}
+        {{#paper-menu position="target-right target" as |menu|}}
+          {{#menu.trigger}}
+            {{#paper-button iconButton=true}}
+              {{paper-icon "person_outline" size=24}}
+            {{/paper-button}}
+          {{/menu.trigger}}
+
+          {{#menu.content width=4 as |content|}}
+            {{#content.menu-item}}
+              {{paper-icon "settings"}}
+              <span>Properties</span>
+            {{/content.menu-item}}
+            {{#content.menu-item}}
+              {{paper-icon "style"}}
+              <span>Appearance</span>
+            {{/content.menu-item}}
+            {{paper-divider}}
+
+            {{#content.menu-item}}
+              {{paper-icon "power_settings_new"}}
+              <span>Logout</span>
+            {{/content.menu-item}}
+          {{/menu.content}}
+        {{/paper-menu}}
+      {{/appbar.additional}}
+
+    {{/paper-appbar}}
+
+    <div class="gs-side-container">
+      {{flow-container
+    blocks=model.lines
+    currentZoomLevel=zoomLevel
+    onDeleteBlock=(action 'deleteBlock')
+    onElementEdit=(action 'editDialogLine')
+    onConnectToNewBlock=(action 'createNewDialogLine')}}
+
+      {{#if showToast}}
+        {{#paper-toast position="bottom left" duration=3000 capsule=false onClose=(action (toggle 'showToast' this)) as |toast|}}
+          {{#toast.text}}{{toastMessage}}{{/toast.text}}
+          {{#if showToastButton}}
+            {{#paper-button accent=true}}Undo{{/paper-button}}
+          {{/if}}
+        {{/paper-toast}}
+      {{/if}}
+
+      {{#if showLineEditDialog}}
+        {{dialogline-dialog value=dialogLine.message dialogFlag=showLineEditDialog}}
+      {{/if}}
+    </div>
+
+    {{#if showLoadingDialog}}
+      {{md-filedialog host=host onCloseDialog=(action "closeDialog") onFileSelect=(action "onFileSelect")}}
+    {{/if}}
+  </div>
+</div>

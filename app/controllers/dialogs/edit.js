@@ -1,5 +1,6 @@
 import Ember from 'ember';
 import RSVP from 'rsvp';
+import { inject as service } from '@ember/service';
 import uuidv4 from 'npm:uuid';
 
 export default Ember.Controller.extend({
@@ -7,6 +8,22 @@ export default Ember.Controller.extend({
   answerToBeEdited: null,
 
   showToast: false,
+
+  leftToRightAutolayout: service('auto-layout'),
+
+  showLoadingDialog: false,
+
+  // zoom level of the dialog graph
+  zoomLevel: 100,
+
+  host: '',
+
+  init() {
+    this._super(...arguments);
+
+    this.set('host', this.get('store').adapterFor('application').get('host'))
+  },
+
   flatArray(arr) {
     return arr.reduce((acc, val) => Array.isArray(val) ? acc.concat(this.flatArray(val)) : acc.concat(val), []);
   },
@@ -211,6 +228,73 @@ export default Ember.Controller.extend({
         })
     },
 
-    connectionReroute() {}
+    connectionReroute() {},
+
+    undo() {
+      alert("undo");
+    },
+
+    redo() {
+      alert("redo");
+    },
+
+    relayout() {
+      const parentLine = this.get("model.startingLine");
+
+      this.get('leftToRightAutolayout').relayout(parentLine);
+    },
+
+    loadDialogFile() {
+      this.set('showLoadingDialog', true);
+    },
+
+    saveDialogFile() {
+      const model = this.get('model');
+
+      const store = this.get('store');
+
+      // save dialog line always before connectors and connections
+      RSVP.allSettled(store.peekAll('dialog-line').filter(dialogLine => (dialogLine.get('isNew') || dialogLine.get('isDeleted') || dialogLine.get('hasDirtyAttributes'))).map(dialogLine => {
+        return dialogLine.save();
+      })).then(() => {
+        let models = ['output', 'input'];
+
+        let connectorsPromises = new Array();
+        models.forEach(model => {
+          let connectors = store.peekAll(model).filter(connector =>
+            (connector.get('isNew') && connector.get('isConnected')));
+
+          connectorsPromises = connectorsPromises.concat(connectors.map(connector => {
+            return connector.save().then(() => {
+              if (connector.get('connection').then) {
+                connector.get('connection').then(connection => {
+                  return connection.save();
+                });
+              }
+            });
+          }));
+        });
+
+
+        RSVP.allSettled(connectorsPromises).then(() => {
+          model.save();
+        });
+      });
+    },
+
+
+    closeDialog() {
+      this.set('showLoadingDialog', false);
+    },
+
+    onFileSelect(file) {
+      this.transitionToRoute('dialogs.edit', file.fileName + "." + file.extension);
+
+    },
+
+    changeZoomLevel(value){
+      this.set('zoomLevel', value);
+    }
+
   }
 });
