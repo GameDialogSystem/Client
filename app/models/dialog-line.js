@@ -1,6 +1,10 @@
 import DS from 'ember-data';
 import FlowBlockModel from 'flow-logic/models/block';
 
+/**
+ * @module
+ * @augments EmberData/Model
+ */
 export default FlowBlockModel.extend({
 
   /**

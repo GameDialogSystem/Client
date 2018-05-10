@@ -1,5 +1,10 @@
 import DS from 'ember-data';
 
+
+/**
+ * @module
+ * @augments EmberData/Model
+ */
 export default DS.Model.extend({
   /**
   * Defines the name of a dialog. This is needed to distingish between different

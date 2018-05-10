@@ -9,6 +9,10 @@ const Router = Ember.Router.extend({
 Router.map(function() {
   this.route('dialogs', function() {
     this.route('edit', { path: '/edit/:dialog_id'});
+
+    this.route('line', function() {
+      this.route('edit', { path: '/edit/:line_id'});
+    });
   });
 });
 

@@ -1,5 +1,6 @@
 import Route from '@ember/routing/route';
 
+
 export default Route.extend({
 
       model(params) {
@@ -25,6 +26,7 @@ export default Route.extend({
           controller.set('currentlyLoading', true);
 
           return true; // allows the loading template to be shown
-        }
+        },
+
       }
 });

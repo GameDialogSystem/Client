@@ -1,7 +1,15 @@
 import Ember from 'ember';
 import RSVP from 'rsvp';
-import { inject as service } from '@ember/service';
+import {
+  inject as service
+} from '@ember/service';
 import uuidv4 from 'npm:uuid';
+
+/*
+const {
+  remote
+} = requireNode('electron');
+*/
 
 export default Ember.Controller.extend({
   isShowingOptions: false,
@@ -42,7 +50,7 @@ export default Ember.Controller.extend({
   },
 
   deletesAllChildren(block, selectedBlocks) {
-    let self = this;
+
 
     const connectedOutputs = block.get('outputs').filterBy('isConnected');
     if (connectedOutputs.length === 0) {
@@ -146,7 +154,7 @@ export default Ember.Controller.extend({
 
 
     deleteBlock(block, selectedBlocks) {
-      const self = this;
+
 
       if (block.get('inputs.length') === 0) {
         this.set('toastMessage', 'Deletion cancelled: Cannot delete first dialog line');
@@ -174,7 +182,7 @@ export default Ember.Controller.extend({
       }
 
 
-      let promise = new Promise(function(resolve, reject) {
+      new Promise(function(resolve) {
         block.get('inputs').filterBy('isConnected').forEach(function(input) {
           input.get('connection').then(connection => {
             connection.get('output').then(output => {
@@ -188,7 +196,7 @@ export default Ember.Controller.extend({
             });
           });
         });
-      }).then((value) => {
+      }).then(() => {
         let outputs = block.get('outputs').map(function(output) {
           return output.destroyRecord();
         })
@@ -292,8 +300,34 @@ export default Ember.Controller.extend({
 
     },
 
-    changeZoomLevel(value){
+    changeZoomLevel(value) {
       this.set('zoomLevel', value);
+    },
+
+
+    maximize() {
+      /*
+      var window = remote.getCurrentWindow();
+      if (!window.isMaximized()) {
+        window.maximize();
+      } else {
+        window.unmaximize();
+      }
+*/
+    },
+
+    minimize() {
+      /*
+      var window = remote.getCurrentWindow();
+      window.minimize();
+      */
+    },
+
+    close() {
+      /*
+      var window = remote.getCurrentWindow();
+      window.close();
+      */
     }
 
   }

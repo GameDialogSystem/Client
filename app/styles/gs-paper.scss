@@ -71,3 +71,194 @@ md-lineedit{
     left: 0;
   }
 }
+
+/**
+*
+* DIALOG, FILEDIALOG
+* @since 0.1
+*
+*/
+md-dialog {
+  width: 1200px;
+  overflow: hidden;
+
+  md-dialog-actions {
+    margin-top: -5px;
+  }
+}
+
+md-dialog-content {
+  overflow: hidden;
+  min-height: 600px;
+  display: flex;
+  position: relative;
+  align-items: stretch;
+
+  .layout-row {
+    height: 100%;
+  }
+
+  > .liquid-container {
+    position: absolute;
+    left: 24px;
+    right: 24px;
+    top: 20px;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+
+
+    > .liquid-child {
+      height: 100%;
+      display: flex;
+
+      > .liquid-container {
+        width: 100%;
+        > .liquid-child {
+          height: 100%;
+
+
+          .directory{
+            width: 30%;
+          }
+        }
+      }
+    }
+  }
+
+  .information {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: left;
+    justify-content: center;
+    flex-grow: 2;
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+
+    h1 {
+      font-size: 1.5em;
+      color: $secondaryText;
+      padding: 0;
+      margin: 0;
+    }
+  }
+}
+
+.file-content {
+  display: flex;
+  flex-wrap: wrap;
+  flex-grow: 2;
+  align-content: flex-start;
+  align-items: stretch;
+
+  .icon {
+    text-align: center;
+    cursor: default;
+    min-width: 100px;
+    height: 100px;
+    position: relative;
+
+    div {
+      position: absolute;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      margin: 5px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+
+      md-icon {
+        margin: 0;
+      }
+
+      span {
+        font-size: 0.9em;
+      }
+    }
+  }
+
+  .icon:hover {
+    background: color('grey', '200');
+  }
+}
+
+table.md-table {
+  width: 100%;
+
+  tr:not(:last-child) {
+    td {
+      border-bottom: none;
+    }
+  }
+
+  tr {
+    height: 48px;
+    line-height: 48px;
+
+    td,
+    th {
+      text-align: left;
+      padding-right: 56px;
+      border-bottom: solid 1px $dividers;
+    }
+
+    td:first-child,
+    th:first-child {
+      padding-left: 24px;
+    }
+
+    td:last-child,
+    th:last-child {
+      padding-right: 24px;
+    }
+
+    th {
+      font-weight: normal;
+      font-size: 13px;
+
+      a {
+        text-decoration: none;
+        color: $secondaryText;
+        display: flex;
+
+        md-icon {
+          margin-top: -1px;
+          transition: all ease 0.5s;
+        }
+
+        md-icon.desc {
+          transform: rotate(180deg);
+        }
+      }
+    }
+
+    th:hover {
+      cursor: default;
+    }
+
+    td {
+      color: $primaryText;
+      font-size: 12px;
+    }
+  }
+
+  tr:not(:first-child):hover {
+    cursor: default;
+    background: color('grey', '200');
+  }
+}
+
+.md-file-grid{
+}
+
+
+paper-appbar-additional{
+  background: green;
+}

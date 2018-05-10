@@ -1,4 +1,5 @@
 <div class="application">
+  {{!--
   <div class="hotbar">
     <div>
       <div class="content">
@@ -26,7 +27,8 @@
       </div>
     </div>
   </div>
-  <div class="content">
+  --}}
+  <div class="gs-application">
     {{#paper-appbar title="Hoppelhase" as |appbar|}}
       {{appbar.tab label="Start" value="start"}}
       {{#appbar.tabContent value="start" }}
@@ -106,6 +108,15 @@
             {{/content.menu-item}}
           {{/menu.content}}
         {{/paper-menu}}
+        {{#paper-button iconButton=true onClick=(action 'minimize')}}
+          {{paper-icon "keyboard_arrow_down" size=24}}
+        {{/paper-button}}
+        {{#paper-button iconButton=true onClick=(action 'maximize')}}
+          {{paper-icon "crop_square" size=24}}
+        {{/paper-button}}
+        {{#paper-button iconButton=true onClick=(action 'close')}}
+          {{paper-icon "close" size=24}}
+        {{/paper-button}}
       {{/appbar.additional}}
 
     {{/paper-appbar}}

@@ -3,6 +3,11 @@ import Ember from 'ember';
 import franc from 'npm:franc';
 import Langs from 'npm:langs';
 
+/**
+ *
+ * @module
+ * @augments Ember/Component
+ */
 export default Component.extend({
   tagName: 'md-lineedit',
 
@@ -21,6 +26,7 @@ export default Component.extend({
    * case the return value will be empty. Otherwise the local language will be
    * returned e.g. German will be returned as 'Deutsch'.
    *
+   * @function
    * @param  {string} 'language'  The language of the content as calculated before
    * @param  {number} 'wordCount' the count of words within the content. The detection
    * does not work properly with short sentences. Therefore it might change in
@@ -45,6 +51,7 @@ export default Component.extend({
   /**
    * getSelection - Gets the current selection within the browser window
    *
+   * @function
    * @return {Selection}  the selection made by the user or undefined if the browser
    * does not support the window.getSelection function.
    */
@@ -61,6 +68,7 @@ export default Component.extend({
    * getRangeFromSelection - Gets the range of a user selection within the
    * browser window
    *
+   * @function
    * @param  {Selection} selection the selection made by the user
    * @return {Range} the range of the user selection if the browser support the
    * corresponding functions. Otherwise undefined will be returned.
@@ -78,7 +86,8 @@ export default Component.extend({
    * getRange - Gets the range of the current active selection made by the user
    * within the browser window
    *
-   * @return {type}  the range of the user selection if the browser support the
+   * @function
+   * @return {Range}  the range of the user selection if the browser support the
    * corresponding functions and a valid user selection exists.
    * Otherwise undefined will be returned.
    */
@@ -103,6 +112,7 @@ export default Component.extend({
    * offset between cursor and the beginning of the content of the element that
    * is focused. Therefore the caret position shows a local offset.
    *
+   * @function
    * @return {number}  the offset within the currently selected element between
    * cursor and beginning.
    */
@@ -122,12 +132,13 @@ export default Component.extend({
    * input element. Contrary to the {@link getCaretPositionFromElement} function
    * will this function consider multiple elements.
    *
+   * @function
    * @return {number}  the offset within the currently selected element between
    * cursor and beginning of the contenteditable content.
    */
   getCaretPosition() {
     var selectedNode = this.getSelection();
-    if(selectedNode.anchorNode === null){
+    if (selectedNode.anchorNode === null) {
       return 0;
     }
 
@@ -162,9 +173,11 @@ export default Component.extend({
    * setCaretPositionOnElement - Sets the caret position within the passed element
    * at the desired position
    *
+   * @function
    * @param  {Object} element  The element where the caret will be positioned
-   * @param  {type} position The offset between the beginning of the element
+   * @param  {number} position The offset between the beginning of the element
    * content and the cursor position.
+   * @return {undefined}
    */
   setCaretPositionOnElement(element, position) {
     let selection = this.getSelection();
@@ -187,8 +200,10 @@ export default Component.extend({
    * element. In order to do so, the function will calculate the correct
    * element that will receive the focus and sets the caret position accordingly.
    *
-   * @param  {type} position The offset between the beginning of the element
+   * @function
+   * @param  {number} position The offset between the beginning of the element
    * content and the cursor position.
+   * @return {undefined}
    */
   setCaretPosition(position) {
     const element = this.getEditableElement()[0];
@@ -233,7 +248,7 @@ export default Component.extend({
    */
   setWordCountFromText(text) {
     // return in case the text is empty
-    if(text === null || text === undefined){
+    if (text === null || text === undefined) {
       return;
     }
 
@@ -242,10 +257,10 @@ export default Component.extend({
   },
 
   setLanguageFromText(text) {
-    if(text === null || text === undefined){
+    if (text === null || text === undefined) {
       return;
     }
-    
+
     if (text.split(" ").length >= 10) {
       this.set('language', franc(text));
 
@@ -368,7 +383,7 @@ export default Component.extend({
       //const caretPosition = self.getCaretPosition();
 
       const value = self.get('value');
-      if(value !== this.innerHTML){
+      if (value !== this.innerHTML) {
         self.set('value', Ember.$(this).text());
       }
 

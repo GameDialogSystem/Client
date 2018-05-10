@@ -1,8 +1,8 @@
 {{#each files as |file|}}
-    <div class="icon transition" {{action "onFileSelect" file}}>
+    <div class="md-file-grid icon transition" {{action "onFileSelect" file}}>
       <div>
         {{paper-icon "insert-drive-file" size=48}}
-        <span>{{file.fileName}}</span>
+        <span>{{prune file.fileName 12}}</span>
       </div>
     </div>
 {{/each}}

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: pods/components/md-filedialog/component.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: pods/components/md-filedialog/component.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import Component from '@ember/component';
+import RSVP from 'rsvp';
+import Ember from 'ember';
+
+/**
+ *
+ * @module
+ * @augments Ember/Component
+ */
+export default Component.extend({
+  tagName: '',
+
+  directory: 'null',
+
+  search: '',
+
+  viewType: 'module',
+
+
+  viewIcon: Ember.computed('viewType', function() {
+    return 'view-' + this.viewType;
+  }),
+
+  withoutFilesAndFolders: Ember.computed('filteredFiles', 'directories', function() {
+    return this.get('filteredFiles.length') === 0 &amp;&amp; this.get('directories.length') === 0;
+  }),
+
+  filteredFiles: Ember.computed('files', 'search', function() {
+    let files = this.get('files');
+    let search = this.get('search').replace(/[-[\]/{}()*+?.\\^$|]/g, "\\$&amp;");
+
+    if (files === undefined) {
+      return [];
+    }
+
+    return files.filter(file => {
+      return file.fileName.match(search) !== null;
+    })
+  }),
+
+  currentDirectory: Ember.computed('directory', function() {
+    const directory = this.get('directory');
+    if (directory === null) {
+      return [];
+    }
+
+    if (directory === 'null') {
+      return ["Home"];
+    } else {
+      let elements = directory.split("+").join("+|+").split("+");
+      elements.unshift("|");
+      elements.unshift("Home");
+
+      return elements;
+    }
+  }),
+
+  host: '',
+
+  getJSON(url) {
+    const self = this;
+    return new RSVP.Promise((resolve, reject) => {
+      console.log(self.get('host') + '/io/' + url.replace('/', '+'))
+      let xhr = new XMLHttpRequest();
+      xhr.open('GET', self.get('host') + '/io/' + url.replace('/', '+'));
+      xhr.onreadystatechange = handler;
+      xhr.responseType = 'json';
+      xhr.setRequestHeader('Accept', 'application/json');
+      xhr.send();
+
+      function handler() {
+        if (this.readyState === this.DONE) {
+          if (this.status === 200) {
+            resolve(this.response);
+          } else {
+            reject(new Error('getJSON: `' + url + '` failed with status: [' + this.status + ']'));
+          }
+        }
+      }
+    });
+  },
+
+  findFiles() {
+    if (this.isFindingDirectories) {
+      return;
+    }
+    if (this.directory === null) {
+      return;
+    }
+
+    this.set('isFindingDirectories', true);
+    this.getJSON(this.directory)
+      .then(result => {
+        if (this.isDestroyed) {
+          return;
+        }
+
+        let directories = [];
+        let files = [];
+        result.forEach(file => {
+          if (file.fileName[0] !== ".") {
+            if (!file.isFile &amp;&amp; file.isDirectory) {
+              directories.push(file);
+            } else {
+              files.push(file);
+            }
+          }
+
+
+        })
+
+        this.set('directories', directories);
+        this.set('files', files);
+
+        this.set('isFindingDirectories', false);
+      });
+  },
+
+  didReceiveAttrs() {
+    this._super(...arguments);
+    this.findFiles();
+  },
+
+
+  actions: {
+    closeDialog() {
+      this.get("onCloseDialog")();
+    },
+
+    onFileSelect(file) {
+      this.get("onCloseDialog")();
+      this.get('onFileSelect')(file);
+    },
+
+    view(type) {
+      this.set('viewType', type);
+    },
+
+    getFiles(path) {
+      const currentPath = this.get('directory');
+
+      this.set('directory', ((currentPath !== "null") ? (currentPath + "+") : "") + path);
+      this.findFiles();
+    },
+
+    getFilesFromFragment(index) {
+      const directory = this.get('currentDirectory');
+
+      if (index !== 0) {
+        const slicedDirectory = directory.slice(1, index + 1).join('+').replace(/\+\|\+/g, '+');
+        this.set('directory', slicedDirectory.replace('|+', ''));
+      } else {
+        this.set('directory', 'null');
+      }
+
+      this.findFiles();
+
+    }
+  }
+});
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-helpers_prune.html">helpers/prune</a></li><li><a href="module-models_dialog.html">models/dialog</a></li><li><a href="module-models_dialog-line.html">models/dialog-line</a></li><li><a href="module-pods_components_dialogline-dialog_component.html">pods/components/dialogline-dialog/component</a></li><li><a href="module-pods_components_flow-container_component.html">pods/components/flow-container/component</a></li><li><a href="module-pods_components_md-dialogline_component.html">pods/components/md-dialogline/component</a></li><li><a href="module-pods_components_md-filedialog_component.html">pods/components/md-filedialog/component</a></li><li><a href="module-pods_components_md-filegrid_component.html">pods/components/md-filegrid/component</a></li><li><a href="module-pods_components_md-filetable_component.html">pods/components/md-filetable/component</a></li><li><a href="module-pods_components_md-search_component.html">pods/components/md-search/component</a></li><li><a href="module-pods_components_paper-appbar-additional_component.html">pods/components/paper-appbar-additional/component</a></li><li><a href="module-pods_components_paper-appbar-button_component.html">pods/components/paper-appbar-button/component</a></li><li><a href="module-pods_components_paper-appbar-tab-content-group_component.html">pods/components/paper-appbar-tab-content-group/component</a></li><li><a href="module-pods_components_paper-appbar-tab-content_component.html">pods/components/paper-appbar-tab-content/component</a></li><li><a href="module-pods_components_paper-appbar-tab_component.html">pods/components/paper-appbar-tab/component</a></li><li><a href="module-pods_components_paper-appbar_component.html">pods/components/paper-appbar/component</a></li><li><a href="module-pods_components_variable-editor_component.html">pods/components/variable-editor/component</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Apr 30 2018 23:57:48 GMT+0200 (CEST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

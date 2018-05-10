@@ -7,6 +7,12 @@ import uuidv4 from 'npm:uuid';
 // about this problem
 import ResizeSensor from "npm:css-element-queries";
 
+
+/**
+ *
+ * @module
+ * @augments Ember/Component
+ */
 export default FlowElement.extend({
   // inject the store to create the blank outputs to allow
   // user the creation of new connections from an existing

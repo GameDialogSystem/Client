@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: pods/components/md-dialogline/component.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: pods/components/md-dialogline/component.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import FlowElement from 'flow-logic/components/flow-element';
+import Ember from 'ember';
+import uuidv4 from 'npm:uuid';
+
+// this import is a workaround needed by ember browserify see
+// https://github.com/ef4/ember-browserify for more information
+// about this problem
+import ResizeSensor from "npm:css-element-queries";
+
+
+/**
+ *
+ * @module
+ * @augments Ember/Component
+ */
+export default FlowElement.extend({
+  // inject the store to create the blank outputs to allow
+  // user the creation of new connections from an existing
+  // dialog line
+  store: Ember.inject.service(),
+
+  autoresizeEnabled : true,
+
+
+  didInsertElement() {
+    this._super(...arguments);
+
+    this.addEmptyOutput();
+  },
+
+  addEmptyOutput(){
+    let outputs = this.get("model.outputs");
+
+    if(!outputs){
+      return new Array();
+    }
+
+    const store = this.get('store');
+    if(!store){
+      return;
+    }
+
+    // create an empty output connector to allow the creation of new connections
+    let output = store.createRecord('output', {
+      id: uuidv4(),
+      belongsTo: this.get("model"),
+    });
+
+    // add the empty output connector to the dialog line
+    this.get("model.outputs").pushObject(output);
+  },
+
+
+  connectedOutputs: Ember.computed('model.outputs.@each.isConnected', function() {
+    const outputs = this.get('model.outputs');
+
+    if(!outputs){
+      return new Array();
+    }
+
+    return outputs.filterBy('isConnected', true);
+  }),
+
+
+  unconnectedOutput: Ember.computed('model.outputs.@each.isConnected', function() {
+    const outputs = this.get('model.outputs');
+
+    if(!outputs){
+      return new Array();
+    }
+
+    return outputs.filterBy('isConnected', false);
+  }),
+
+
+
+
+  actions: {
+
+    /**
+     * Is triggered each time an output pin was rerouted, not connected to an
+     * existing input pin and the action wasn't cancelled. Use this function
+     * to add new blocks to the model.
+     *
+     * @param {Output} output - the outgoing pin where the action was initialized
+     * @param {Point} point - the position where the mouse button was released and
+     * the new block should be inserted
+     */
+    connectToNewBlock(output, point){
+      const connectToNewBlock = this.get('onConnectToNewBlock');
+
+      if(connectToNewBlock !== null || connectToNewBlock !== undefined){
+        connectToNewBlock(output, point);
+        this.addEmptyOutput();
+      }
+    },
+
+    elementEdit(){
+      this.get('onElementEdit')();
+    }
+  }
+});
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-helpers_prune.html">helpers/prune</a></li><li><a href="module-models_dialog.html">models/dialog</a></li><li><a href="module-models_dialog-line.html">models/dialog-line</a></li><li><a href="module-pods_components_dialogline-dialog_component.html">pods/components/dialogline-dialog/component</a></li><li><a href="module-pods_components_flow-container_component.html">pods/components/flow-container/component</a></li><li><a href="module-pods_components_md-dialogline_component.html">pods/components/md-dialogline/component</a></li><li><a href="module-pods_components_md-filedialog_component.html">pods/components/md-filedialog/component</a></li><li><a href="module-pods_components_md-filegrid_component.html">pods/components/md-filegrid/component</a></li><li><a href="module-pods_components_md-filetable_component.html">pods/components/md-filetable/component</a></li><li><a href="module-pods_components_md-search_component.html">pods/components/md-search/component</a></li><li><a href="module-pods_components_paper-appbar-additional_component.html">pods/components/paper-appbar-additional/component</a></li><li><a href="module-pods_components_paper-appbar-button_component.html">pods/components/paper-appbar-button/component</a></li><li><a href="module-pods_components_paper-appbar-tab-content-group_component.html">pods/components/paper-appbar-tab-content-group/component</a></li><li><a href="module-pods_components_paper-appbar-tab-content_component.html">pods/components/paper-appbar-tab-content/component</a></li><li><a href="module-pods_components_paper-appbar-tab_component.html">pods/components/paper-appbar-tab/component</a></li><li><a href="module-pods_components_paper-appbar_component.html">pods/components/paper-appbar/component</a></li><li><a href="module-pods_components_variable-editor_component.html">pods/components/variable-editor/component</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Mon Apr 30 2018 23:57:48 GMT+0200 (CEST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

@@ -2,24 +2,34 @@ import Component from '@ember/component';
 import RSVP from 'rsvp';
 import Ember from 'ember';
 
+/**
+ *
+ * @module
+ * @augments Ember/Component
+ */
 export default Component.extend({
   tagName: '',
 
-  directory: null,
+  directory: 'null',
 
   search: '',
 
-  viewType: 'list',
+  viewType: 'module',
+
+
+  viewIcon: Ember.computed('viewType', function() {
+    return 'view-' + this.viewType;
+  }),
 
   withoutFilesAndFolders: Ember.computed('filteredFiles', 'directories', function() {
     return this.get('filteredFiles.length') === 0 && this.get('directories.length') === 0;
   }),
 
-  filteredFiles: Ember.computed('files', 'search', function(){
+  filteredFiles: Ember.computed('files', 'search', function() {
     let files = this.get('files');
     let search = this.get('search').replace(/[-[\]/{}()*+?.\\^$|]/g, "\\$&");
 
-    if(files === undefined) {
+    if (files === undefined) {
       return [];
     }
 
@@ -30,13 +40,13 @@ export default Component.extend({
 
   currentDirectory: Ember.computed('directory', function() {
     const directory = this.get('directory');
-    if(directory === null){
+    if (directory === null) {
       return [];
     }
 
-    if(directory === 'null'){
+    if (directory === 'null') {
       return ["Home"];
-    }else{
+    } else {
       let elements = directory.split("+").join("+|+").split("+");
       elements.unshift("|");
       elements.unshift("Home");
@@ -50,7 +60,7 @@ export default Component.extend({
   getJSON(url) {
     const self = this;
     return new RSVP.Promise((resolve, reject) => {
-
+      console.log(self.get('host') + '/io/' + url.replace('/', '+'))
       let xhr = new XMLHttpRequest();
       xhr.open('GET', self.get('host') + '/io/' + url.replace('/', '+'));
       xhr.onreadystatechange = handler;
@@ -70,34 +80,40 @@ export default Component.extend({
     });
   },
 
-  findFiles(){
-    if(this.get('isFindingDirectories')) { return; }
-    if(this.get('directory') === null) { return; }
+  findFiles() {
+    if (this.isFindingDirectories) {
+      return;
+    }
+    if (this.directory === null) {
+      return;
+    }
 
     this.set('isFindingDirectories', true);
-    this.getJSON(this.get('directory'))
-    .then(result => {
-       if (this.isDestroyed) { return; }
+    this.getJSON(this.directory)
+      .then(result => {
+        if (this.isDestroyed) {
+          return;
+        }
 
-       let directories = [];
-       let files = [];
-       result.forEach(file => {
-         if(file.fileName[0] !== "."){
-           if(!file.isFile && file.isDirectory){
-             directories.push(file);
-           }else {
-             files.push(file);
-           }
-         }
+        let directories = [];
+        let files = [];
+        result.forEach(file => {
+          if (file.fileName[0] !== ".") {
+            if (!file.isFile && file.isDirectory) {
+              directories.push(file);
+            } else {
+              files.push(file);
+            }
+          }
 
 
-       })
+        })
 
-       this.set('directories', directories);
-       this.set('files', files);
+        this.set('directories', directories);
+        this.set('files', files);
 
-       this.set('isFindingDirectories', false);
-    });
+        this.set('isFindingDirectories', false);
+      });
   },
 
   didReceiveAttrs() {
@@ -127,13 +143,13 @@ export default Component.extend({
       this.findFiles();
     },
 
-    getFilesFromFragment(index){
+    getFilesFromFragment(index) {
       const directory = this.get('currentDirectory');
 
-      if(index !== 0){
-        const slicedDirectory = directory.slice(1, index+1).join('+').replace(/\+\|\+/g, '+');
+      if (index !== 0) {
+        const slicedDirectory = directory.slice(1, index + 1).join('+').replace(/\+\|\+/g, '+');
         this.set('directory', slicedDirectory.replace('|+', ''));
-      }else{
+      } else {
         this.set('directory', 'null');
       }
 

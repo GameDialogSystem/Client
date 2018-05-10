@@ -1,6 +1,11 @@
 import Component from '@ember/component';
 import Ember from 'ember';
 
+/**
+ *
+ * @module
+ * @augments Ember/Component
+ */
 export default Component.extend({
   tagName: 'md-search',
 
