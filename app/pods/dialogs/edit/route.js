@@ -26,7 +26,6 @@ export default Route.extend({
           controller.set('currentlyLoading', true);
 
           return true; // allows the loading template to be shown
-        },
-
+        }
       }
 });

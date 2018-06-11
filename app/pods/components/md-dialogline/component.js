@@ -40,11 +40,22 @@ export default FlowElement.extend({
       return;
     }
 
+    // prevent that empty outputs are added multiple times to the element
+    // this happens each times the component is reinserted into the DOM while
+    // the model is loaded
+    if(this.model.outputs.length - this.connectedOutputs.length > 0){
+      return;
+    }
+
     // create an empty output connector to allow the creation of new connections
     let output = store.createRecord('output', {
       id: uuidv4(),
       belongsTo: this.get("model"),
     });
+
+
+
+
 
     // add the empty output connector to the dialog line
     this.get("model.outputs").pushObject(output);

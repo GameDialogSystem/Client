@@ -1,0 +1,67 @@
+<div class="side-second-right-sidebar">
+  {{#paper-list}}
+    {{#paper-item}}
+      <p>Use source control for this file</p>
+      <div class="md-secondary-container">
+        {{paper-switch class="flex" value=booleanProp1 onChange=(action (mut booleanProp1))}}
+      </div>
+    {{/paper-item}}
+    {{paper-divider}}
+    {{#paper-subheader}}Info{{/paper-subheader}}
+    {{#paper-item}}
+      <p>Name</p>
+      <div class="md-secondary-container">
+        {{paper-input
+            value=mode.name
+            onChange=(action (mut model.name))
+            required=true
+            errorMessages=(hash
+              required="Your file needs to habe a name"
+            )
+          }}
+      </div>
+    {{/paper-item}}
+    {{#paper-item}}
+      <p>Description</p>
+      <div class="md-secondary-container">
+        {{paper-input
+            value=model.description
+            onChange=(action (mut model.description))
+            required=true
+            textarea=true
+            maxlength=300
+            block=true
+            errorMessages=(hash
+              required="Your file needs to habe a name"
+            )
+          }}
+      </div>
+    {{/paper-item}}
+    {{#paper-item}}
+      <p>Location</p>
+      <div class="md-secondary-container">
+        <p>Files &raquo; {{model.id}}</p>
+      </div>
+    {{/paper-item}}
+    {{#paper-item}}
+      <p>Last Modified</p>
+      <div class="md-secondary-container">
+        <p>2018-06-10</p>
+      </div>
+    {{/paper-item}}
+    {{paper-divider}}
+    {{#paper-subheader}}Who has access{{/paper-subheader}}
+    {{#paper-item class="md-2-line" }}
+      {{paper-icon "security" class="md-avatar-icon"}}
+      <div class="md-list-item-text">
+        <h3>All Users</h3>
+        <p>This file has no access restrictions</p>
+      </div>
+    {{/paper-item}}
+
+  {{/paper-list}}
+</div>
+<div class="side-right-sidebar">
+
+
+</div>

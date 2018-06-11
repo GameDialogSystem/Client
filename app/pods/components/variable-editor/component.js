@@ -17,7 +17,6 @@ export default Component.extend({
 
   wordCount: 10,
 
-
   /**
    * localLanguageName - Computes the used language of the editor.
    * In order to compute it the function will listen for every change of the

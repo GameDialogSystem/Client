@@ -1,0 +1,95 @@
+{{!--
+
+###################################################################################################################
+
+  --}}
+<div class="character-container">
+
+  <div class="side-toolbar">
+    {{#paper-toolbar}}
+      {{#paper-toolbar-tools}}
+        {{#paper-button iconButton=true onClick="returnToOverview" }}
+          {{paper-icon "navigate_before"}}
+        {{/paper-button}}
+        <h2>
+        Characters
+      </h2>
+        <span class="flex"></span>
+        {{#paper-button iconButton=true}}
+          {{paper-icon "favorite"}}
+        {{/paper-button}}
+        {{#paper-button iconButton=true}}
+          {{paper-icon "more_vert"}}
+        {{/paper-button}}
+        {{#paper-button raised=true primary=true}}
+          Save Changes
+        {{/paper-button}}
+      {{/paper-toolbar-tools}}
+    {{/paper-toolbar}}
+  </div>
+
+  <div class="side-meta-toolbar">
+    {{#paper-toolbar}}
+      {{#paper-toolbar-tools}}
+        <h2>
+        Appearances
+      </h2>
+      {{/paper-toolbar-tools}}
+    {{/paper-toolbar}}
+  </div>
+
+  <div class="side-content">
+    {{#paper-list}}
+      {{#paper-item class="md-3-line md-long-text" as |controls|}}
+        <img src="https://i.pinimg.com/favicons/752f4d52fef0b2c6f4c7a433f3f7b0a4ec60aa95d344120ae28c2510.png?d7bf100265daf50edc8810b67b9649e2" alt= {{item.name}} class="md-avatar">
+        <div class="md-list-item-text">
+          <h3>Blacksheep</h3>
+          <p>
+            Secondary line text Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam massa quam. Nulla metus metus, ullamcorper vel, tincidunt sed, euismod in, nibh. Quisque volutpat condimentum velit. Class aptent taciti sociosqu ad litora torquent per conubia
+            nostra, per inceptos himenaeos.
+          </p>
+        </div>
+        <div class="md-secondary-container">
+          {{#controls.button secondary=true iconButton=true}}
+            {{paper-icon "edit"}}
+          {{/controls.button}}
+          {{#controls.button secondary=true iconButton=true}}
+            {{paper-icon "delete"}}
+          {{/controls.button}}
+        </div>
+      {{/paper-item}}
+
+      {{paper-divider}}
+
+
+    {{/paper-list}}
+  </div>
+  <div class="side-second-right-sidebar">
+
+  </div>
+  {{!--
+    CHARACTER CHANGE WINDOW
+  --}}
+  <div class="side-right-sidebar">
+    <div class="character-preview">
+      <h1>Blacksheep</h1>
+    </div>
+    {{paper-input
+ label="Name" value=name onChange=(action (mut name)) required=true errorMessages=(hash required="Your character needs to have a name." )
+}}
+{{paper-input
+label="Age" type="number" value=age min="0" max="5000" onChange=(action (mut age)) required=false errorMessages=(hash required="Your character needs to have a name." )
+}}
+
+{{#paper-switch value=booleanProp1 onChange=(action (mut booleanProp1))}}
+  {{#if booleanProp1}}
+    Playable character
+  {{else}}
+    Non playable character
+  {{/if}}
+{{/paper-switch}}
+  </div>
+  {{!--
+    CHARACTER CHANGE WINDOW
+  --}}
+</div>

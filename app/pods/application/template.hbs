@@ -1,4 +1,30 @@
-{{outlet}}
-<button {{action "minimize"}}>Minimize</button>
-<button {{action "maximize"}}>Maximize</button>
-<button {{action "close"}}>Close</button>
+<div class="side-container">
+  {{!--
+
+###################################################################################################################
+
+  --}}
+  <div class="side-left-sidebar hotbar">
+    <div class="content">
+      {{#paper-button iconButton=true}}
+        {{paper-icon "speaker_notes" size=32 }}
+      {{/paper-button}}
+    </div>
+    <div class="content">
+      {{#link-to 'character'}}
+      {{#paper-button iconButton=true}}
+        {{paper-icon "group" size=32}}
+      {{/paper-button}}
+      {{/link-to}}
+    </div>
+    <div class="content">
+      {{#paper-button iconButton=true}}
+        {{paper-icon "grade" size=32}}
+      {{/paper-button}}
+    </div>
+  </div>
+
+<div class="gs-application">
+  {{outlet}}
+</div>
+</div>

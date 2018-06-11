@@ -232,7 +232,7 @@ export default Ember.Controller.extend({
       this.get('store').findRecord('dialog-line', id)
         .then((line) => {
           this.set('dialogLine', line);
-          this.set('showLineEditDialog', true);
+          this.transitionToRoute('dialogs.line.edit', line)
         })
     },
 

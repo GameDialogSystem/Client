@@ -12,8 +12,9 @@ $dividers: rgba(0, 0, 0, 0.12);
 $statusBar: color('grey', '300');
 $appBar: color('grey', '100');
 $background: color('grey', '50');
-@import 'gs-paper';
-// all elements of the application are inserted into this container
+@import 'gs-paper'; // all elements of the application are inserted into this container
+@import 'gs-new-layout';
+
 .gs-application {
   width: 100%;
   height: 100vh;
@@ -269,39 +270,27 @@ md-list-item {
     max-width: 72px;
     background: color($primary, '500');
 
-
-    > div {
-      position: relative;
+    > .content {
       width: 48px;
       height: 48px;
-      margin-bottom: 12px;
+      background: #E1F5FE;
+      border-radius: 4px;
+      z-index: 999;
+      transition: width 0.5s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
+      background: green;
+      transition: all 0.5s ease;
 
-      > .content {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        height: 100%;
-        background: #E1F5FE;
-
-        border-radius: 4px;
-        z-index: 999;
-        transition: width 0.5s ease;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        transition: all 0.5s ease;
-
-        > md-icon{
-          color: white;
-        }
+      > md-icon {
+        color: white;
       }
     }
 
-    > div:hover{
-      > .content{
+    > div:hover {
+      > .content {
         background: #8BC34A;
       }
     }

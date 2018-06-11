@@ -8,12 +8,16 @@ const Router = Ember.Router.extend({
 
 Router.map(function() {
   this.route('dialogs', function() {
+    this.route('index', function() {
+      this.route('edit', { path: '/meta/:dialog_id'});
+    });
     this.route('edit', { path: '/edit/:dialog_id'});
 
     this.route('line', function() {
       this.route('edit', { path: '/edit/:line_id'});
     });
   });
+  this.route('character');
 });
 
 export default Router;

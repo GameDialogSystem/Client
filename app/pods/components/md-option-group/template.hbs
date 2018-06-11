@@ -1,0 +1,9 @@
+<h2>{{title}}</h2>
+<div class="dogear" {{action "toggle"}}>
+  {{paper-icon icon}}
+</div>
+{{#if isExpanded}}
+  <div class="content">
+    {{yield}}
+  </div>
+{{/if}}

@@ -13,6 +13,14 @@ export default DS.Model.extend({
   name: DS.attr('string'),
 
   /**
+   * Defines a description that helps distingishing multiple dialog files
+   * in a project with many dialog files. This attribute is optionial although
+   * it is highly recommended to use it.
+   *
+   */
+   description: DS.attr('string'),
+
+  /**
   * Each dialog needs to have a starting line as an entry point.
   * This entry point is defined explicitly by this relationship
   */
